@@ -2,7 +2,13 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.NOWSOPTAndroid" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/yellow_main</item>
+        <item name="colorPrimaryVariant">@color/green_main</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.NOWSOPTAndroid" parent="Base.Theme.NOWSOPTAndroid" />
