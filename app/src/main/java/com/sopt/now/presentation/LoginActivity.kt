@@ -12,7 +12,7 @@ import com.sopt.now.databinding.ActivityLoginBinding
 
 class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
     private lateinit var getResult: ActivityResultLauncher<Intent>
-    private var useId: String? = null
+    private var userId: String? = null
     private var userPw: String? = null
     private var userNickname: String? = null
     private var userAge: String? = null
@@ -28,7 +28,7 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
-                useId = result.data?.getStringExtra("id")
+                userId = result.data?.getStringExtra("id")
                 userPw = result.data?.getStringExtra("pw")
                 userNickname = result.data?.getStringExtra("nickname")
                 userAge = result.data?.getStringExtra("age")
@@ -58,7 +58,7 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         val intent = Intent(this@LoginActivity, MainActivity::class.java).apply {
             putExtras(
                 bundleOf(
-                    "id" to useId,
+                    "id" to userId,
                     "pw" to userPw,
                     "nickname" to userNickname,
                     "age" to userAge
@@ -69,7 +69,7 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
     }
 
     private fun isLoginValidity(id: String, pw: String): Boolean {
-        return id.trim().isNotEmpty() && id == useId && pw.trim().isNotEmpty() && pw == userPw
+        return id.trim().isNotEmpty() && id == userId && pw.trim().isNotEmpty() && pw == userPw
     }
 
     private fun initLoginBtnClickListener() {
