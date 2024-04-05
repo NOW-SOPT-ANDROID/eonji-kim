@@ -15,8 +15,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -29,7 +32,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -71,6 +77,9 @@ fun SignContainer() {
     var isPwValid by remember { mutableStateOf(false) }
     var isNicknameValid by remember { mutableStateOf(false) }
     var isAgeValid by remember { mutableStateOf(false) }
+    var pwVisibility by remember { mutableStateOf(false) }
+    val pwIcon =
+        painterResource(id = if (pwVisibility) R.drawable.ic_pw_visible else R.drawable.ic_pw_invisible)
 
     Column(
         modifier = Modifier
@@ -108,8 +117,21 @@ fun SignContainer() {
                 .fillMaxWidth()
                 .padding(bottom = 40.dp),
             label = { Text("비밀번호를 입력해주세요") },
-            visualTransformation = VisualTransformation.None,
+            visualTransformation = if (pwVisibility) VisualTransformation.None else PasswordVisualTransformation(),
             singleLine = true,
+            trailingIcon = {
+                IconButton(onClick = {
+                    pwVisibility = !pwVisibility
+                }) {
+                    Icon(
+                        painter = pwIcon,
+                        contentDescription = "Visibility Icon"
+                    )
+                }
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password
+            ),
         )
         // Nickname
         TextLoginFieldTitle("닉네임")
