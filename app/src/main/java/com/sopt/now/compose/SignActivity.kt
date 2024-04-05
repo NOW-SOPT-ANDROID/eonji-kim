@@ -104,6 +104,7 @@ fun SignContainer() {
                 .padding(bottom = 40.dp),
             label = { Text("아이디를 입력해주세요") },
             singleLine = true,
+            maxLines = 1,
         )
         // Pw
         TextLoginFieldTitle("비밀번호")
@@ -119,6 +120,7 @@ fun SignContainer() {
             label = { Text("비밀번호를 입력해주세요") },
             visualTransformation = if (pwVisibility) VisualTransformation.None else PasswordVisualTransformation(),
             singleLine = true,
+            maxLines = 1,
             trailingIcon = {
                 IconButton(onClick = {
                     pwVisibility = !pwVisibility
@@ -146,6 +148,7 @@ fun SignContainer() {
                 .padding(bottom = 40.dp),
             label = { Text("닉네임을 입력해주세요") },
             singleLine = true,
+            maxLines = 1,
         )
         // Age
         TextLoginFieldTitle("나이")
@@ -160,6 +163,7 @@ fun SignContainer() {
                 .padding(bottom = 40.dp),
             label = { Text("나이를 입력해주세요") },
             singleLine = true,
+            maxLines = 1,
         )
 
         Spacer(modifier = Modifier.weight(1f))
