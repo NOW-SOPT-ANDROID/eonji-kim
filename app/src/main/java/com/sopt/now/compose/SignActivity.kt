@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -39,6 +38,10 @@ import androidx.core.os.bundleOf
 import com.sopt.now.compose.ui.theme.GreenMain
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import com.sopt.now.compose.ui.theme.White
+import com.sopt.now.compose.util.KeyStorage.USER_AGE
+import com.sopt.now.compose.util.KeyStorage.USER_ID
+import com.sopt.now.compose.util.KeyStorage.USER_NICKNAME
+import com.sopt.now.compose.util.KeyStorage.USER_PW
 
 class SignActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -171,10 +174,10 @@ fun SignContainer() {
                         val intent = Intent(context, LoginActivity::class.java).apply {
                             putExtras(
                                 bundleOf(
-                                    "id" to id,
-                                    "pw" to pw,
-                                    "nickname" to nickname,
-                                    "age" to age
+                                    USER_ID to id,
+                                    USER_PW to pw,
+                                    USER_NICKNAME to nickname,
+                                    USER_AGE to age
                                 )
                             )
                         }
