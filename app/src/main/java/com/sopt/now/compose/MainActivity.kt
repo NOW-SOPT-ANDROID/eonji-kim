@@ -30,6 +30,10 @@ import com.sopt.now.compose.ui.theme.GreenMain
 import com.sopt.now.compose.ui.theme.Grey600
 import com.sopt.now.compose.ui.theme.Grey700
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
+import com.sopt.now.compose.util.KeyStorage.USER_AGE
+import com.sopt.now.compose.util.KeyStorage.USER_ID
+import com.sopt.now.compose.util.KeyStorage.USER_NICKNAME
+import com.sopt.now.compose.util.KeyStorage.USER_PW
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,7 +79,7 @@ fun MainContainer() {
                     .aspectRatio(1f / 1f),
             )
             // Nickname
-            (context as? Activity)?.intent?.getStringExtra("nickname")?.let {
+            (context as? Activity)?.intent?.getStringExtra(USER_NICKNAME)?.let {
                 Text(
                     text = it,
                     fontSize = 20.sp,
@@ -90,7 +94,7 @@ fun MainContainer() {
                 color = Grey700
             )
             // Age
-            (context as? Activity)?.intent?.getStringExtra("age")?.let {
+            (context as? Activity)?.intent?.getStringExtra(USER_AGE)?.let {
                 Text(
                     text = it,
                     fontSize = 18.sp,
@@ -109,7 +113,7 @@ fun MainContainer() {
 
         // Id
         TextMainFieldTitle("ID")
-        (context as? Activity)?.intent?.getStringExtra("id")?.let {
+        (context as? Activity)?.intent?.getStringExtra(USER_ID)?.let {
             Text(
                 text = it,
                 fontSize = 18.sp,
@@ -122,7 +126,7 @@ fun MainContainer() {
 
         // Pw
         TextMainFieldTitle("비밀번호")
-        (context as? Activity)?.intent?.getStringExtra("pw")?.let {
+        (context as? Activity)?.intent?.getStringExtra(USER_PW)?.let {
             Text(
                 text = it,
                 fontSize = 18.sp,
