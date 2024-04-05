@@ -90,7 +90,7 @@ fun LoginContainer() {
                     userAge = getStringExtra(USER_AGE).toString()
 
                     Toast.makeText(context, "회원가입에 성공하였습니다!", Toast.LENGTH_SHORT).show()
-                }
+                } else Toast.makeText(context, "회원가입에 실패하였습니다!", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -114,6 +114,7 @@ fun LoginContainer() {
                 .padding(bottom = 40.dp),
             label = { Text("아이디를 입력해주세요") },
             singleLine = true,
+            maxLines = 1,
         )
         // Pw
         TextLoginFieldTitle("비밀번호")
@@ -126,6 +127,7 @@ fun LoginContainer() {
             label = { Text("비밀번호를 입력해주세요") },
             visualTransformation = if (pwVisibility) VisualTransformation.None else PasswordVisualTransformation(),
             singleLine = true,
+            maxLines = 1,
             trailingIcon = {
                 IconButton(onClick = {
                     pwVisibility = !pwVisibility
@@ -160,6 +162,7 @@ fun LoginContainer() {
                                 "age" to userAge
                             )
                         )
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     }
                     context.startActivity(intent)
                 } else Toast.makeText(context, "알맞은 ID와 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
