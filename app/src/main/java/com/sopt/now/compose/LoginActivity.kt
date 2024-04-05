@@ -1,6 +1,5 @@
 package com.sopt.now.compose
 
-import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
@@ -35,12 +34,15 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.getString
 import androidx.core.os.bundleOf
 import com.sopt.now.compose.ui.theme.GreenMain
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import com.sopt.now.compose.ui.theme.White
 import com.sopt.now.compose.ui.theme.YellowMain
+import com.sopt.now.compose.util.KeyStorage.USER_AGE
+import com.sopt.now.compose.util.KeyStorage.USER_ID
+import com.sopt.now.compose.util.KeyStorage.USER_NICKNAME
+import com.sopt.now.compose.util.KeyStorage.USER_PW
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,13 +73,15 @@ fun LoginContainer() {
 
     val getResult =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
-                userId = result.data?.getStringExtra("id") ?: ""
-                userPw = result.data?.getStringExtra("pw") ?: ""
-                userNickname = result.data?.getStringExtra("nickname") ?: ""
-                userAge = result.data?.getStringExtra("age") ?: ""
+            result.data?.run {
+                if (result.resultCode == RESULT_OK) {
+                    userId = getStringExtra(USER_ID).toString()
+                    userPw = getStringExtra(USER_PW).toString()
+                    userNickname = getStringExtra(USER_NICKNAME).toString()
+                    userAge = getStringExtra(USER_AGE).toString()
 
-                Toast.makeText(context, "회원가입에 성공하였습니다!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "회원가입에 성공하였습니다!", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
