@@ -9,6 +9,10 @@ import com.sopt.now.core.base.BindingActivity
 import com.sopt.now.core.util.context.snackBar
 import com.sopt.now.core.util.context.toast
 import com.sopt.now.databinding.ActivityLoginBinding
+import com.sopt.now.presentation.util.KeyStorage.USER_AGE
+import com.sopt.now.presentation.util.KeyStorage.USER_ID
+import com.sopt.now.presentation.util.KeyStorage.USER_NICKNAME
+import com.sopt.now.presentation.util.KeyStorage.USER_PW
 
 class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
     private lateinit var getResult: ActivityResultLauncher<Intent>
@@ -27,14 +31,16 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         getResult = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
-            if (result.resultCode == RESULT_OK) {
-                userId = result.data?.getStringExtra("id")
-                userPw = result.data?.getStringExtra("pw")
-                userNickname = result.data?.getStringExtra("nickname")
-                userAge = result.data?.getStringExtra("age")
+            result.data?.run {
+                if (result.resultCode == RESULT_OK) {
+                    userId = getStringExtra(USER_ID)
+                    userPw = getStringExtra(USER_PW)
+                    userNickname = getStringExtra(USER_NICKNAME)
+                    userAge = getStringExtra(USER_AGE)
 
-                toast(getString(R.string.success_message_login_sign))
-            } else snackBar(binding.root) { getString(R.string.error_message_login_sign) }
+                    toast(getString(R.string.success_message_login_sign))
+                } else snackBar(binding.root) { getString(R.string.error_message_login_sign) }
+            }
         }
     }
 
@@ -44,9 +50,9 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         }
     }
 
-    private fun initLoginCheck() {
+    private fun checkLoginValid() {
         with(binding) {
-            if (isLoginValidity(etLoginId.text.toString(), etLoginPw.text.toString())) {
+            if (getLoginValidity(etLoginId.text.toString(), etLoginPw.text.toString())) {
                 toast(getString(R.string.success_message_login_login))
 
                 navigateToMain()
@@ -58,23 +64,23 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         val intent = Intent(this@LoginActivity, MainActivity::class.java).apply {
             putExtras(
                 bundleOf(
-                    "id" to userId,
-                    "pw" to userPw,
-                    "nickname" to userNickname,
-                    "age" to userAge
+                    USER_ID to userId,
+                    USER_PW to userPw,
+                    USER_NICKNAME to userNickname,
+                    USER_AGE to userAge
                 )
             )
         }
         startActivity(intent)
     }
 
-    private fun isLoginValidity(id: String, pw: String): Boolean {
+    private fun getLoginValidity(id: String, pw: String): Boolean {
         return id.trim().isNotEmpty() && id == userId && pw.trim().isNotEmpty() && pw == userPw
     }
 
     private fun initLoginBtnClickListener() {
         binding.btnLoginLogin.setOnClickListener {
-            initLoginCheck()
+            checkLoginValid()
         }
     }
 }
