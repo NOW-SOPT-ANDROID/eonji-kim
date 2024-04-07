@@ -19,6 +19,7 @@
     <string name="tv_login_pw">비밀번호</string>
 
     <!-- 회원가입 페이지 -->
+    <string name="tv_sign_title">SIGN UP</string>
     <string name="tv_sign_nickname">닉네임</string>
     <string name="et_sign_nickname_hint">닉네임을 입력해주세요</string>
     <string name="tv_sign_age">나이</string>
