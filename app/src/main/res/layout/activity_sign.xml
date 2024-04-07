@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/sv_sign"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/btn_sign_sign"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="30dp">
+
+                <TextView
+                    android:id="@+id/tv_sign_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:text="@string/tv_sign_title"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_sign_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/tv_login_id"
+                    android:textColor="@color/grey_700"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sign_title" />
+
+                <EditText
+                    android:id="@+id/et_sign_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/et_login_id_hint"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sign_id" />
+
+                <TextView
+                    android:id="@+id/tv_sign_pw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/tv_login_pw"
+                    android:textColor="@color/grey_700"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_sign_id" />
+
+                <EditText
+                    android:id="@+id/et_sign_pw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/et_login_pw_hint"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sign_pw" />
+
+                <TextView
+                    android:id="@+id/tv_sign_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/tv_sign_nickname"
+                    android:textColor="@color/grey_700"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_sign_pw" />
+
+                <EditText
+                    android:id="@+id/et_sign_nickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/et_sign_nickname_hint"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sign_nickname" />
+
+                <TextView
+                    android:id="@+id/tv_sign_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/tv_sign_age"
+                    android:textColor="@color/grey_700"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_sign_nickname" />
+
+                <EditText
+                    android:id="@+id/et_sign_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/et_sign_age_hint"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sign_age" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_sign_sign"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="60dp"
+            android:background="@drawable/shape_line_15_rect"
+            android:backgroundTint="@color/green_main"
+            android:paddingVertical="12dp"
+            android:text="@string/btn_login_sign"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sv_sign" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

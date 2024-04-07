@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- main color -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="yellow_main">#F3C301</color>
+    <color name="yellow_sub">#FEE3A2</color>
+    <color name="green_main">#87C159</color>
+    <color name="green_sub">#058240</color>
+    <color name="blue">#ADCACB</color>
+
+    <!-- gray scale -->
+    <color name="grey_200">#F2F3F5</color>
+    <color name="grey_300">#DCDCDE</color>
+    <color name="grey_400">#ADB5BD</color>
+    <color name="grey_500">#AFB0B4</color>
+    <color name="grey_600">#939499</color>
+    <color name="grey_700">#505156</color>
+    <color name="grey_800">#424242</color>
+    <color name="grey_900">#212121</color>
 </resources>
