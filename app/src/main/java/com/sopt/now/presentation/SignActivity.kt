@@ -19,12 +19,26 @@ class SignActivity : BindingActivity<ActivitySignBinding>(R.layout.activity_sign
     private fun checkSignValid() {
         with(binding) {
             when {
-                etSignId.text.trim().length !in 6..10 -> snackBar(root) { getString(R.string.error_message_sign_invalid_id) }
-                etSignPw.text.trim().length !in 8..12 -> snackBar(root) { getString(R.string.error_message_sign_invalid_pw) }
+                etSignId.text.trim().length !in MIN_ID_LEN..MAX_ID_LEN -> snackBar(root) {
+                    getString(
+                        R.string.error_message_sign_invalid_id
+                    )
+                }
+
+                etSignPw.text.trim().length !in MIN_PW_LEN..MAX_PW_LEN -> snackBar(root) {
+                    getString(
+                        R.string.error_message_sign_invalid_pw
+                    )
+                }
+
                 etSignNickname.text.trim()
                     .isEmpty() -> snackBar(root) { getString(R.string.error_message_sign_invalid_nickname) }
 
-                etSignAge.text.trim().length !in 1..3 -> snackBar(root) { getString(R.string.error_message_sign_invalid_age) }
+                etSignAge.text.trim().length !in MIN_AGE_LEN..MAX_AGE_LEN -> snackBar(root) {
+                    getString(
+                        R.string.error_message_sign_invalid_age
+                    )
+                }
 
                 else -> navigateToLogin(
                     etSignId.text.toString(),
@@ -55,5 +69,14 @@ class SignActivity : BindingActivity<ActivitySignBinding>(R.layout.activity_sign
         binding.btnSignSign.setOnClickListener {
             checkSignValid()
         }
+    }
+
+    companion object {
+        const val MIN_ID_LEN = 6
+        const val MAX_ID_LEN = 10
+        const val MIN_PW_LEN = 8
+        const val MAX_PW_LEN = 12
+        const val MIN_AGE_LEN = 1
+        const val MAX_AGE_LEN = 3
     }
 }
