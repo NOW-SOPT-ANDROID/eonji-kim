@@ -8,10 +8,11 @@
     <string name="error_message_login_sign">회원가입에 실패하였습니다!</string>
     <string name="success_message_login_login">로그인에 성공하였습니다!</string>
     <string name="error_message_login_login">알맞은 ID와 비밀번호를 입력해주세요.</string>
+    <string name="error_message_login_no_sign">회원가입을 먼저 진행해주세요.</string>
 
     <!-- 로그인 & 회원가입 페이지 -->
-    <string name="et_login_id_hint">아이디를 입력해주세요</string>
-    <string name="et_login_pw_hint">비밀번호를 입력해주세요</string>
+    <string name="et_login_id_hint">아이디를 입력해주세요.</string>
+    <string name="et_login_pw_hint">비밀번호를 입력해주세요.</string>
     <string name="btn_login_sign">회원가입 하기</string>
 
     <!-- 로그인 & 회원가입 & 메인 페이지 -->
@@ -21,9 +22,9 @@
     <!-- 회원가입 페이지 -->
     <string name="tv_sign_title">SIGN UP</string>
     <string name="tv_sign_nickname">닉네임</string>
-    <string name="et_sign_nickname_hint">닉네임을 입력해주세요</string>
+    <string name="et_sign_nickname_hint">닉네임을 입력해주세요.</string>
     <string name="tv_sign_age">나이</string>
-    <string name="et_sign_age_hint">나이를 입력해주세요</string>
+    <string name="et_sign_age_hint">나이를 입력해주세요.</string>
     <string name="error_message_sign_invalid_id">ID를 6글자 이상 10글자 이하로 입력해주세요.</string>
     <string name="error_message_sign_invalid_pw">비밀번호를 8글자 이상 12글자 이하로 입력해주세요.</string>
     <string name="error_message_sign_invalid_nickname">닉네임을 공백 제외 1글자 이상으로 입력해주세요.</string>
@@ -31,5 +32,6 @@
 
     <!-- 메인 페이지 -->
     <string name="tv_main_dot">·</string>
+    <string name="toast_main_back">종료하시려면 한 번 더 눌러주세요.</string>
 
 </resources>
