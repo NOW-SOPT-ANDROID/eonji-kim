@@ -141,7 +141,7 @@ fun SignContainer() {
             value = nickname,
             onValueChange = { newNickname ->
                 nickname = newNickname
-                isNicknameValid = nickname.trim().isNotEmpty()
+                isNicknameValid = nickname.isNotBlank()
             },
             modifier = Modifier
                 .fillMaxWidth()
