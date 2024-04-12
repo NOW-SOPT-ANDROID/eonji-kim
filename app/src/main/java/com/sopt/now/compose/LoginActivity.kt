@@ -148,8 +148,7 @@ fun LoginContainer() {
         // LoginBtn
         Button(
             onClick = {
-                if (id.trim().isNotEmpty() && id == userId && pw.trim()
-                        .isNotEmpty() && pw == userPw
+                if (id.isNotBlank() && id == userId && pw.isNotBlank() && pw == userPw
                 ) {
                     Toast.makeText(context, "로그인에 성공하였습니다!", Toast.LENGTH_SHORT).show()
 
