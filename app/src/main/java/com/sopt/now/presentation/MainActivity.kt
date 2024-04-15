@@ -8,6 +8,10 @@ import com.sopt.now.presentation.login.LoginActivity
 
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun initView() {
+        navigateToLogin()
+    }
+
+    private fun navigateToLogin() {
         startActivity(Intent(this, LoginActivity::class.java))
     }
 }
