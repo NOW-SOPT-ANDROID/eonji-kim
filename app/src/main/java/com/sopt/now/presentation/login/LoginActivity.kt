@@ -51,7 +51,7 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         loginViewModel.loginValid.flowWithLifecycle(lifecycle).onEach {
             when (it) {
                 is UiState.Loading -> Unit
-                is UiState.Success -> navigateToMain()
+                is UiState.Success -> navigateToHome()
                 is UiState.Failure -> initErrorMessage(it.errorMessage)
             }
         }.launchIn(lifecycleScope)
@@ -63,7 +63,7 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         }
     }
 
-    private fun navigateToMain() {
+    private fun navigateToHome() {
         toast(getString(R.string.success_message_login_login))
 
         Intent(this@LoginActivity, HomeActivity::class.java).apply {
