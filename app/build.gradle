@@ -57,6 +57,8 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
 
     // Third-Party
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -69,10 +71,6 @@ dependencies {
 
     // Kotlin
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1'
-
-    // viewPager
-    implementation 'androidx.viewpager2:viewpager2:1.0.0'
-    implementation 'com.tbuonomo:dotsindicator:5.0'
 
     // glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
