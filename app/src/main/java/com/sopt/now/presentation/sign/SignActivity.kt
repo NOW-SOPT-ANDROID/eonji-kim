@@ -47,10 +47,9 @@ class SignActivity : BindingActivity<ActivitySignBinding>(R.layout.activity_sign
     }
 
     private fun navigateToLogin(user: User) {
-        val intent = Intent(this@SignActivity, LoginActivity::class.java).apply {
+        Intent(this@SignActivity, LoginActivity::class.java).apply {
             putExtra(USER_DATA, user)
-        }
-        setResult(RESULT_OK, intent)
+        }.let { setResult(RESULT_OK, it) }
         finish()
     }
 
