@@ -22,5 +22,10 @@ class LoginViewModel : ViewModel() {
     }
 
     private fun getLoginValid(id: String, pw: String, user: User) =
-        id.isNotEmpty() && id == user.id && pw.isNotEmpty() && pw == user.pw
+        getLoginIdValid(id, user) && getLoginPwValid(pw, user) && getLoginIdEmpty(id) && getLoginPwEmpty(pw)
+
+    private fun getLoginIdValid(id: String, user: User) = (id == user.id)
+    private fun getLoginPwValid(pw: String, user: User) = (pw == user.pw)
+    private fun getLoginIdEmpty(id: String) = id.isNotBlank()
+    private fun getLoginPwEmpty(pw: String) = pw.isNotBlank()
 }
