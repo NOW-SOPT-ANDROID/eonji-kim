@@ -70,11 +70,10 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
     private fun navigateToMain() {
         toast(getString(R.string.success_message_login_login))
 
-        val intent = Intent(this@LoginActivity, MainActivity::class.java).apply {
+        Intent(this@LoginActivity, MainActivity::class.java).apply {
             putExtra(USER_DATA, userData)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        startActivity(intent)
+        }.let { startActivity(it) }
     }
 
     private fun initLoginBtnClickListener() {
