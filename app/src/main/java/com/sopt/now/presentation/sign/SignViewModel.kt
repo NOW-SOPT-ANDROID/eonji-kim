@@ -32,8 +32,8 @@ class SignViewModel : ViewModel() {
 
     private fun getSignIdValid(userID: String) = userID.length in MIN_ID_LEN..MAX_ID_LEN
     private fun getSignPwValid(userPw: String) = userPw.length in MIN_PW_LEN..MAX_PW_LEN
-    private fun getSignNicknameValid(userNickname: String) = userNickname.isNotEmpty()
-    private fun getSignAgeValid(userAge: String) = userAge.length in MIN_AGE_LEN..MAX_AGE_LEN
+    private fun getSignNicknameValid(userNickname: String) = userNickname.isNotBlank()
+    private fun getSignAgeValid(userAge: String) = userAge.trim().length in MIN_AGE_LEN..MAX_AGE_LEN
 
     companion object {
         const val MIN_ID_LEN = 6
