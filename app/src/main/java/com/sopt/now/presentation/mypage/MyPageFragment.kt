@@ -16,7 +16,7 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
     private fun initResultLoginUserInformation() {
         with(binding) {
             tvMyPageNicknameValue.text = loginViewModel.getUserInfo().nickname
-            tvMyPageAgeValue.text = loginViewModel.getUserInfo().age + "세"
+            tvMyPageAgeValue.text = "${loginViewModel.getUserInfo().age}세"
             tvMyPageIdValue.text = loginViewModel.getUserInfo().id
             tvMyPagePwValue.text = loginViewModel.getUserInfo().pw
         }
