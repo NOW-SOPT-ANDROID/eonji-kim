@@ -2,6 +2,7 @@ package com.sopt.now.presentation.home
 
 import androidx.lifecycle.ViewModel
 import com.sopt.now.R
+import com.sopt.now.presentation.login.LoginViewModel
 import com.sopt.now.presentation.model.Friend
 
 class HomeViewModel : ViewModel() {
@@ -67,4 +68,6 @@ class HomeViewModel : ViewModel() {
             selfDescription = "쿠루",
         ),
     )
+
+    fun getUserInfo() = LoginViewModel().getUserInfo()
 }
