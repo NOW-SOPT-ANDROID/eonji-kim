@@ -13,13 +13,16 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
     private var backPressedTime = 0L
 
     override fun initView() {
+        initCurrentFragment()
+        initBottomNavClickListener()
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    }
+
+    private fun initCurrentFragment() {
         val currentFragment = supportFragmentManager.findFragmentById(binding.fcvHome.id)
         if (currentFragment == null) {
             supportFragmentManager.beginTransaction().add(R.id.fcv_home, HomeFragment()).commit()
         }
-
-        clickBottomNavigation()
-        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
@@ -33,7 +36,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         }
     }
 
-    private fun clickBottomNavigation() {
+    private fun initBottomNavClickListener() {
         binding.bnvHome.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_home -> {
