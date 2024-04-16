@@ -1,4 +1,4 @@
-package com.sopt.now.compose
+package com.sopt.now.compose.presentation
 
 import android.app.Activity
 import android.app.Activity.RESULT_OK
@@ -15,13 +15,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,6 +39,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
+import com.sopt.now.compose.R
+import com.sopt.now.compose.component.textfield.TextFieldWithTitle
 import com.sopt.now.compose.ui.theme.GreenMain
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import com.sopt.now.compose.ui.theme.White
@@ -89,82 +89,46 @@ fun SignContainer() {
         verticalArrangement = Arrangement.Top
     ) {
         // Title
-        TextSignTitle()
+        Text(
+            "SIGN UP",
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(top = 50.dp, bottom = 40.dp)
+        )
 
         // Id
-        TextLoginFieldTitle("ID")
-        OutlinedTextField(
-            value = id,
-            onValueChange = { newId ->
-                id = newId
-                isIdValid = id.trim().length in 6..10
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 40.dp),
-            label = { Text("아이디를 입력해주세요") },
-            singleLine = true,
-            maxLines = 1,
-        )
+        TextFieldWithTitle("ID", id, { newId ->
+            id = newId
+            isIdValid = id.length in 6..10
+        }, "아이디를 입력해주세요")
         // Pw
-        TextLoginFieldTitle("비밀번호")
-        OutlinedTextField(
-            value = pw,
-            onValueChange = { newPw ->
+        TextFieldWithTitle("비밀번호",
+            pw,
+            { newPw ->
                 pw = newPw
-                isPwValid = pw.trim().length in 8..12
+                isPwValid = pw.length in 8..12
             },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 40.dp),
-            label = { Text("비밀번호를 입력해주세요") },
-            visualTransformation = if (pwVisibility) VisualTransformation.None else PasswordVisualTransformation(),
-            singleLine = true,
-            maxLines = 1,
-            trailingIcon = {
-                IconButton(onClick = {
-                    pwVisibility = !pwVisibility
-                }) {
+            "비밀번호를 입력해주세요",
+            KeyboardType.Password,
+            if (pwVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+            {
+                IconButton(onClick = { pwVisibility = !pwVisibility }) {
                     Icon(
                         painter = pwIcon,
                         contentDescription = "Visibility Icon"
                     )
                 }
-            },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password
-            ),
-        )
+            })
         // Nickname
-        TextLoginFieldTitle("닉네임")
-        OutlinedTextField(
-            value = nickname,
-            onValueChange = { newNickname ->
-                nickname = newNickname
-                isNicknameValid = nickname.isNotBlank()
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 40.dp),
-            label = { Text("닉네임을 입력해주세요") },
-            singleLine = true,
-            maxLines = 1,
-        )
+        TextFieldWithTitle("닉네임", nickname, { newNickname ->
+            nickname = newNickname
+            isNicknameValid = nickname.isNotBlank()
+        }, "닉네임을 입력해주세요")
         // Age
-        TextLoginFieldTitle("나이")
-        OutlinedTextField(
-            value = age,
-            onValueChange = { newAge ->
-                age = newAge
-                isAgeValid = age.trim().length in 1..3
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 40.dp),
-            label = { Text("나이를 입력해주세요") },
-            singleLine = true,
-            maxLines = 1,
-        )
+        TextFieldWithTitle("나이", age, { newAge ->
+            age = newAge
+            isAgeValid = age.trim().length in 1..3
+        }, "나이를 입력해주세요")
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -222,16 +186,6 @@ fun SignContainer() {
             Text("회원가입 하기", color = White, fontSize = 17.sp)
         }
     }
-}
-
-@Composable
-private fun TextSignTitle() {
-    Text(
-        "SIGN UP",
-        fontSize = 30.sp,
-        fontWeight = FontWeight.Bold,
-        modifier = Modifier.padding(top = 50.dp, bottom = 40.dp)
-    )
 }
 
 @Preview(showBackground = true)

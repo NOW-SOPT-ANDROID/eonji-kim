@@ -1,4 +1,4 @@
-package com.sopt.now.compose
+package com.sopt.now.compose.presentation
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -16,13 +16,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,6 +39,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
+import com.sopt.now.compose.R
+import com.sopt.now.compose.component.textfield.TextFieldWithTitle
 import com.sopt.now.compose.ui.theme.GreenMain
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import com.sopt.now.compose.ui.theme.White
@@ -102,46 +102,29 @@ fun LoginContainer() {
         verticalArrangement = Arrangement.Top
     ) {
         // Title
-        TextLoginTitle()
+        Text(
+            "Welcome to SOPT",
+            fontSize = 30.sp,
+            modifier = Modifier.padding(top = 50.dp, bottom = 100.dp)
+        )
 
         // Id
-        TextLoginFieldTitle("ID")
-        OutlinedTextField(
-            value = id,
-            onValueChange = { newId -> id = newId },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 40.dp),
-            label = { Text("아이디를 입력해주세요") },
-            singleLine = true,
-            maxLines = 1,
-        )
+        TextFieldWithTitle("ID", id, { newId -> id = newId }, "아이디를 입력해주세요")
         // Pw
-        TextLoginFieldTitle("비밀번호")
-        OutlinedTextField(
-            value = pw,
-            onValueChange = { newPw -> pw = newPw },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 40.dp),
-            label = { Text("비밀번호를 입력해주세요") },
-            visualTransformation = if (pwVisibility) VisualTransformation.None else PasswordVisualTransformation(),
-            singleLine = true,
-            maxLines = 1,
-            trailingIcon = {
-                IconButton(onClick = {
-                    pwVisibility = !pwVisibility
-                }) {
+        TextFieldWithTitle("비밀번호",
+            pw,
+            { newPw -> pw = newPw },
+            "비밀번호를 입력해주세요",
+            KeyboardType.Password,
+            if (pwVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+            {
+                IconButton(onClick = { pwVisibility = !pwVisibility }) {
                     Icon(
                         painter = pwIcon,
                         contentDescription = "Visibility Icon"
                     )
                 }
-            },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password
-            ),
-        )
+            })
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -188,24 +171,6 @@ fun LoginContainer() {
             Text("회원가입 하기", color = White, fontSize = 17.sp)
         }
     }
-}
-
-@Composable
-private fun TextLoginTitle() {
-    Text(
-        "Welcome to SOPT",
-        fontSize = 30.sp,
-        modifier = Modifier.padding(top = 50.dp, bottom = 100.dp)
-    )
-}
-
-@Composable
-fun TextLoginFieldTitle(name: String) {
-    Text(
-        name,
-        modifier = Modifier.fillMaxWidth(),
-        fontSize = 20.sp
-    )
 }
 
 @Preview(showBackground = true)

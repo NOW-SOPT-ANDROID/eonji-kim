@@ -1,4 +1,4 @@
-package com.sopt.now.compose
+package com.sopt.now.compose.presentation
 
 import android.app.Activity
 import android.os.Bundle
@@ -32,8 +32,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sopt.now.compose.R
+import com.sopt.now.compose.component.text.TextWithTitle
 import com.sopt.now.compose.ui.theme.GreenMain
-import com.sopt.now.compose.ui.theme.Grey600
 import com.sopt.now.compose.ui.theme.Grey700
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import com.sopt.now.compose.util.KeyStorage.USER_AGE
@@ -97,14 +98,12 @@ fun MainContainer() {
                     .aspectRatio(1f / 1f),
             )
             // Nickname
-            (context as? Activity)?.intent?.getStringExtra(USER_NICKNAME)?.let {
-                Text(
-                    text = it,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(start = 16.dp)
-                )
-            }
+            Text(
+                text = (context as? Activity)?.intent?.getStringExtra(USER_NICKNAME) ?: "",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(start = 16.dp)
+            )
             Text(
                 "·",
                 fontSize = 18.sp,
@@ -112,14 +111,12 @@ fun MainContainer() {
                 color = Grey700
             )
             // Age
-            (context as? Activity)?.intent?.getStringExtra(USER_AGE)?.let {
-                Text(
-                    text = it,
-                    fontSize = 18.sp,
-                    modifier = Modifier.padding(start = 10.dp),
-                    color = Grey700
-                )
-            }
+            Text(
+                text = (context as? Activity)?.intent?.getStringExtra(USER_AGE) ?: "",
+                fontSize = 18.sp,
+                modifier = Modifier.padding(start = 10.dp),
+                color = Grey700
+            )
         }
         HorizontalDivider(
             modifier = Modifier
@@ -130,42 +127,11 @@ fun MainContainer() {
         )
 
         // Id
-        TextMainFieldTitle("ID")
-        (context as? Activity)?.intent?.getStringExtra(USER_ID)?.let {
-            Text(
-                text = it,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp, bottom = 40.dp),
-                color = Grey600
-            )
-        }
-
+        TextWithTitle("ID", (context as? Activity)?.intent?.getStringExtra(USER_ID) ?: "", 40.dp)
         // Pw
-        TextMainFieldTitle("비밀번호")
-        (context as? Activity)?.intent?.getStringExtra(USER_PW)?.let {
-            Text(
-                text = it,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp),
-                color = Grey600
-            )
-        }
+        TextWithTitle("비밀번호", (context as? Activity)?.intent?.getStringExtra(USER_PW) ?: "")
     }
 }
-
-@Composable
-private fun TextMainFieldTitle(name: String) {
-    Text(
-        name,
-        modifier = Modifier.fillMaxWidth(),
-        fontSize = 24.sp
-    )
-}
-
 
 @Preview(showBackground = true)
 @Composable
