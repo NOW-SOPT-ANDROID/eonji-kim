@@ -4,9 +4,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.HorizontalDivider
@@ -30,21 +32,20 @@ import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 fun MyPageScreen(user: User) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 30.dp),
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
+        Spacer(modifier = Modifier.height(20.dp))
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 50.dp),
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Profile Img
             Image(
-                painter = painterResource(id = R.drawable.img_main_profile),
+                painter = painterResource(id = R.drawable.img_user_profile_dororo),
                 contentDescription = "user profile img",
                 modifier = Modifier
                     .size(90.dp)
