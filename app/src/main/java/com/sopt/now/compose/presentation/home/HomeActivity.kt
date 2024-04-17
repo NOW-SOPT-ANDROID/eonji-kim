@@ -32,7 +32,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -40,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.now.compose.R
+import com.sopt.now.compose.model.BottomNavigationItem
 import com.sopt.now.compose.model.User
 import com.sopt.now.compose.ui.theme.GreenMain
 import com.sopt.now.compose.ui.theme.Grey300
@@ -64,11 +64,6 @@ class HomeActivity : ComponentActivity() {
         }
     }
 }
-
-data class BottomNavigationItem(
-    val icon: ImageVector,
-    val label: String
-)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -141,11 +136,13 @@ fun HomeContainer(user: User) {
         }
     ) { innerPadding ->
         Column(
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(horizontal = 30.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             when (selectedItem) {
-                0 -> HomeScreen()
+                0 -> HomeScreen(user)
                 1 -> SearchScreen()
                 2 -> MyPageScreen(user)
             }
