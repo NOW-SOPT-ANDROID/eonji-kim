@@ -62,8 +62,15 @@ fun LoginScreen() {
                 if (result.resultCode == Activity.RESULT_OK) {
                     user = getParcelableExtra(USER_DATA) ?: User("", "", "", "")
 
-                    Toast.makeText(context, "회원가입에 성공하였습니다!", Toast.LENGTH_SHORT).show()
-                } else Toast.makeText(context, "회원가입에 실패하였습니다!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.toast_login_sign_success), Toast.LENGTH_SHORT
+                    ).show()
+                } else Toast.makeText(
+                    context,
+                    context.getString(R.string.toast_login_Sign_fail),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 

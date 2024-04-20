@@ -115,25 +115,25 @@ fun SignScreen() {
                 when {
                     !isIdValid -> Toast.makeText(
                         context,
-                        "ID를 6글자 이상 10글자 이하로 입력해주세요.",
+                        context.getString(R.string.toast_sign_id_condition),
                         Toast.LENGTH_SHORT
                     ).show()
 
                     !isPwValid -> Toast.makeText(
                         context,
-                        "비밀번호를 8글자 이상 12글자 이하로 입력해주세요.",
+                        context.getString(R.string.toast_sign_pw_condition),
                         Toast.LENGTH_SHORT
                     ).show()
 
                     !isNicknameValid -> Toast.makeText(
                         context,
-                        "닉네임을 공백 제외 1글자 이상으로 입력해주세요.",
+                        context.getString(R.string.toast_sign_nickname_condition),
                         Toast.LENGTH_SHORT
                     ).show()
 
                     !isAgeValid -> Toast.makeText(
                         context,
-                        "나이를 1글자 이상 3글자 이하로 입력해주세요.",
+                        context.getString(R.string.toast_sign_age_condition),
                         Toast.LENGTH_SHORT
                     ).show()
 

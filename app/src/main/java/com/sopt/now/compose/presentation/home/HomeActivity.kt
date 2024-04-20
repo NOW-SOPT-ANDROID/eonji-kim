@@ -92,7 +92,7 @@ fun HomeContainer(user: User) {
             (context as Activity).finish()
         } else {
             backPressedState = true
-            Toast.makeText(context, "종료하시려면 한 번 더 눌러주세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.toast_home_back), Toast.LENGTH_SHORT).show()
         }
         backPressedTime = System.currentTimeMillis()
     }
