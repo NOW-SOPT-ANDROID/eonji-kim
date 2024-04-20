@@ -31,6 +31,11 @@
 
     <!-- 마이 페이지 -->
     <string name="tv_my_page_dot">·</string>
+
+    <!-- 홈 페이지 -->
     <string name="toast_main_back">종료하시려면 한 번 더 눌러주세요.</string>
+    <string name="item_menu_home_home">홈</string>
+    <string name="item_menu_home_search">검색</string>
+    <string name="item_menu_home_mypage">마이페이지</string>
 
 </resources>
