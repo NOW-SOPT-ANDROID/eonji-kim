@@ -20,12 +20,13 @@
 
     <TextView
         android:id="@+id/tv_user_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/iv_user_profile"
+        app:layout_constraintEnd_toStartOf="@id/tv_user_self_description"
         app:layout_constraintStart_toEndOf="@id/iv_user_profile"
         app:layout_constraintTop_toTopOf="@id/iv_user_profile"
         tools:text="기먼지" />
@@ -43,6 +44,7 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_user_profile"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_user_name"
         app:layout_constraintTop_toTopOf="@id/iv_user_profile"
         tools:text="안녕 나는 집에 가고 싶어" />
 
