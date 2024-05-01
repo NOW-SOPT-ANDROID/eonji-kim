@@ -18,7 +18,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     }
 
     private fun initHomeAdapter() {
-        val userAdapter = UserAdapter().apply { submitList(listOf(homeViewModel.getUserInfo())) }
+        val userAdapter = UserAdapter().apply { submitList(homeViewModel.mockUserList) }
         val friendAdapter = FriendAdapter().apply { submitList(homeViewModel.mockFriendList) }
 
         binding.rvHomeFriends.run {
