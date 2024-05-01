@@ -4,19 +4,14 @@ import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import com.sopt.now.R
 import com.sopt.now.core.base.BindingActivity
 import com.sopt.now.core.util.context.snackBar
 import com.sopt.now.core.util.context.toast
-import com.sopt.now.core.util.view.UiState
 import com.sopt.now.databinding.ActivityLoginBinding
 import com.sopt.now.presentation.home.HomeActivity
 import com.sopt.now.presentation.sign.SignActivity
 import com.sopt.now.presentation.util.KeyStorage.ERROR_LOGIN_ID_PW
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
     private val loginViewModel by viewModels<LoginViewModel>()
@@ -24,9 +19,9 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
 
     override fun initView() {
         initResultSignUserInformation()
-        initLoginBtnClickListener()
-        initObserveLoginValid()
         initSignBtnClickListener()
+        initLoginBtnClickListener()
+        initObserveLogin()
     }
 
     private fun initResultSignUserInformation() {
@@ -34,9 +29,9 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             result.data?.run {
-                if (result.resultCode == RESULT_OK) {
-                    toast(getString(R.string.success_message_login_sign))
-                } else snackBar(binding.root) { getString(R.string.error_message_login_sign) }
+                if (result.resultCode != RESULT_OK) {
+                    snackBar(binding.root) { getString(R.string.error_message_login_sign) }
+                }
             }
         }
     }
@@ -47,25 +42,24 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         }
     }
 
-    private fun initObserveLoginValid() {
-        loginViewModel.loginValid.flowWithLifecycle(lifecycle).onEach {
-            when (it) {
-                is UiState.Loading -> Unit
-                is UiState.Success -> navigateToHome()
-                is UiState.Failure -> initErrorMessage(it.errorMessage)
+    private fun initObserveLogin() {
+        loginViewModel.postLogin.observe(this) {
+            when (it.isSuccess) {
+                true -> navigateToHome(it.message)
+                false -> initErrorMessage(it.message)
             }
-        }.launchIn(lifecycleScope)
+        }
     }
 
     private fun initErrorMessage(errorMessage: String) {
         when (errorMessage) {
             ERROR_LOGIN_ID_PW -> snackBar(binding.root) { getString(R.string.error_message_login_login) }
+            else -> snackBar(binding.root) { "로그인 실패 : $errorMessage" }
         }
     }
 
-    private fun navigateToHome() {
-        toast(getString(R.string.success_message_login_login))
-
+    private fun navigateToHome(message: String) {
+        toast(message)
         Intent(this@LoginActivity, HomeActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }.let { startActivity(it) }
@@ -74,7 +68,7 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
     private fun initLoginBtnClickListener() {
         with(binding) {
             btnLoginLogin.setOnClickListener {
-                loginViewModel.checkLoginValid(
+                loginViewModel.postLogin(
                     etLoginId.text.toString(),
                     etLoginPw.text.toString()
                 )
