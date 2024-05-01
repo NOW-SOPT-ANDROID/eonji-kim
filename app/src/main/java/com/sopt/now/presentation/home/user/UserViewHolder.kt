@@ -9,7 +9,7 @@ class UserViewHolder(private val binding: ItemUserBinding) :
     fun onBind(userData: User) {
         binding.run {
             tvUserName.text = userData.nickname
-            tvUserSelfDescription.text = "나 ${userData.age}세 응애"
+            tvUserSelfDescription.text = userData.tel
         }
     }
 }
