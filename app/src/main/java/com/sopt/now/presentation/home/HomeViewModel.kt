@@ -2,10 +2,19 @@ package com.sopt.now.presentation.home
 
 import androidx.lifecycle.ViewModel
 import com.sopt.now.R
-import com.sopt.now.presentation.login.LoginViewModel
 import com.sopt.now.presentation.model.Friend
+import com.sopt.now.presentation.model.User
 
 class HomeViewModel : ViewModel() {
+    val mockUserList = listOf(
+        User(
+            id = "test",
+            pw = "test",
+            nickname = "기먼지",
+            tel = "010-2002-0625"
+        )
+    )
+
     val mockFriendList = listOf(
         Friend(
             profileImage = R.drawable.img_friend_profile_keroro,
@@ -68,6 +77,4 @@ class HomeViewModel : ViewModel() {
             selfDescription = "쿠루",
         ),
     )
-
-    fun getUserInfo() = LoginViewModel().getUserInfo()
 }
