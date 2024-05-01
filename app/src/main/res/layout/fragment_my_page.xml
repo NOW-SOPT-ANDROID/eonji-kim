@@ -9,81 +9,86 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingHorizontal="30dp">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/iv_my_page_profile"
-            android:layout_width="90dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="50dp"
-            android:src="@drawable/img_main_profile"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_my_page_nickname_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/iv_my_page_profile"
-            app:layout_constraintStart_toEndOf="@id/iv_my_page_profile"
-            app:layout_constraintTop_toTopOf="@id/iv_my_page_profile"
-            tools:text="닉네임" />
-
-        <TextView
-            android:id="@+id/tv_my_page_dot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="@string/tv_my_page_dot"
-            android:textColor="@color/grey_700"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/iv_my_page_profile"
-            app:layout_constraintStart_toEndOf="@id/tv_my_page_nickname_value"
-            app:layout_constraintTop_toTopOf="@id/iv_my_page_profile" />
-
-        <TextView
-            android:id="@+id/tv_my_page_age_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:textColor="@color/grey_700"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@id/iv_my_page_profile"
-            app:layout_constraintStart_toEndOf="@id/tv_my_page_dot"
-            app:layout_constraintTop_toTopOf="@id/iv_my_page_profile"
-            tools:text="나이" />
-
-        <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/divider_my_page"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_my_page_profile"
             android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_marginTop="20dp"
-            app:dividerColor="@color/green_main"
+            android:layout_height="wrap_content"
+            android:background="@color/yellow_main"
+            android:paddingTop="30dp"
+            android:paddingBottom="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_my_page_profile" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_my_page_profile"
+                android:layout_width="120dp"
+                android:layout_height="0dp"
+                android:background="@drawable/shape_line_15_rect"
+                android:clipToOutline="true"
+                android:src="@drawable/img_main_profile"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_my_page_nickname_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_my_page_profile"
+                tools:text="닉네임" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_my_page_member_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:paddingHorizontal="30dp"
+            android:text="@string/tv_my_page_member_id"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_my_page_profile" />
+
+        <TextView
+            android:id="@+id/tv_my_page_member_id_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="30dp"
+            android:textColor="@color/grey_600"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_my_page_member_id"
+            tools:text="Member ID 값" />
 
         <TextView
             android:id="@+id/tv_my_page_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="40dp"
+            android:paddingHorizontal="30dp"
             android:text="@string/tv_login_id"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider_my_page" />
+            app:layout_constraintTop_toBottomOf="@id/tv_my_page_member_id_value" />
 
         <TextView
             android:id="@+id/tv_my_page_id_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:paddingHorizontal="30dp"
             android:textColor="@color/grey_600"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -92,26 +97,28 @@
             tools:text="ID 값" />
 
         <TextView
-            android:id="@+id/tv_my_page_pw"
+            android:id="@+id/tv_my_page_tel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:text="@string/tv_login_pw"
+            android:paddingHorizontal="30dp"
+            android:text="@string/tv_sign_tel"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_my_page_id_value" />
 
         <TextView
-            android:id="@+id/tv_my_page_pw_value"
+            android:id="@+id/tv_my_page_tel_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:paddingHorizontal="30dp"
             android:textColor="@color/grey_600"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_my_page_pw"
-            tools:text="비밀번호 값" />
+            app:layout_constraintTop_toBottomOf="@id/tv_my_page_tel"
+            tools:text="전화번호 값" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
