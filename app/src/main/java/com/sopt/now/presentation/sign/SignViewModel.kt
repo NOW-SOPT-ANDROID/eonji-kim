@@ -1,50 +1,76 @@
 package com.sopt.now.presentation.sign
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.core.MainApplication
-import com.sopt.now.core.util.view.UiState
+import com.sopt.now.data.ServicePool
+import com.sopt.now.data.dto.request.RequestSignDto
 import com.sopt.now.presentation.model.User
-import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_AGE
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_ID
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_NICKNAME
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_PW
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_TEL
 import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 
 class SignViewModel : ViewModel() {
-    private val _signValid = MutableSharedFlow<UiState<User>>()
-    val signValid: SharedFlow<UiState<User>> = _signValid.asSharedFlow()
+    private val _postSign = MutableLiveData<SignState>()
+    val postSign: MutableLiveData<SignState> = _postSign
 
-    fun checkSignValid(user: User) {
-        viewModelScope.launch {
-            val errorMessage = when {
-                !getSignIdValid(user.id) -> ERROR_SIGN_ID
-                !getSignPwValid(user.pw) -> ERROR_SIGN_PW
-                !getSignNicknameValid(user.nickname) -> ERROR_SIGN_NICKNAME
-                !getSignAgeValid(user.age) -> ERROR_SIGN_AGE
-                else -> null
-            }
-            _signValid.emit(errorMessage?.let { UiState.Failure(it) } ?: UiState.Success(user))
+    fun postSign(user: User) = viewModelScope.launch {
+        if (checkSignValid(user) == null) {
+            runCatching {
+                ServicePool.authServiceApi.postSign(
+                    RequestSignDto(user.id, user.pw, user.nickname, user.tel)
+                )
+            }.fold(
+                {
+                    if (it.code() == 201) {
+                        _postSign.value =
+                            SignState(
+                                true,
+                                "회원가입 성공! 유저의 ID는 ${it.headers()["location"]} 입니둥"
+                            ).apply {
+//                                MainApplication.prefs.setUser(
+//                                    User(user.id, user.pw, user.nickname, user.tel)
+//                                )
+                            }
+                    } else _postSign.value =
+                        SignState(false, "${it.errorBody()?.string()?.split("\"")?.get(5)}")
+                },
+                { _postSign.value = SignState(false, "${it.message}") }
+            )
+        } else {
+            _postSign.value = checkSignValid(user)
+        }
+    }
+
+    private fun checkSignValid(user: User): SignState? {
+        return when {
+            !getSignIdValid(user.id) -> SignState(false, ERROR_SIGN_ID)
+            !getSignPwValid(user.pw) -> SignState(false, ERROR_SIGN_PW)
+            !getSignNicknameValid(user.nickname) -> SignState(false, ERROR_SIGN_NICKNAME)
+            !getSignTelValid(user.tel) -> SignState(false, ERROR_SIGN_TEL)
+            else -> null
         }
     }
 
     private fun getSignIdValid(userID: String) = userID.length in MIN_ID_LEN..MAX_ID_LEN
-    private fun getSignPwValid(userPw: String) = userPw.length in MIN_PW_LEN..MAX_PW_LEN
-    private fun getSignNicknameValid(userNickname: String) = userNickname.isNotBlank()
-    private fun getSignAgeValid(userAge: String) = userAge.trim().length in MIN_AGE_LEN..MAX_AGE_LEN
+    private fun getSignPwValid(userPw: String): Boolean {
+        Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=!])(?=\\S+\$).{8,}\$").let {
+            return it.matcher(userPw).matches()
+        }
+    }
 
-    fun setUserInfo(userData: User) =
-        viewModelScope.launch { MainApplication.prefs.setUser(userData) }
+    private fun getSignNicknameValid(userNickname: String) = userNickname.isNotBlank()
+    private fun getSignTelValid(userTel: String): Boolean {
+        Pattern.compile("^010-\\d{4}-\\d{4}\$").let {
+            return it.matcher(userTel).matches()
+        }
+    }
 
     companion object {
         const val MIN_ID_LEN = 6
         const val MAX_ID_LEN = 10
-        const val MIN_PW_LEN = 8
-        const val MAX_PW_LEN = 12
-        const val MIN_AGE_LEN = 1
-        const val MAX_AGE_LEN = 3
     }
 }
