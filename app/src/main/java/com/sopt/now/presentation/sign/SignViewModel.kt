@@ -2,6 +2,7 @@ package com.sopt.now.presentation.sign
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sopt.now.core.MainApplication
 import com.sopt.now.core.util.view.UiState
 import com.sopt.now.presentation.model.User
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_AGE
@@ -34,6 +35,9 @@ class SignViewModel : ViewModel() {
     private fun getSignPwValid(userPw: String) = userPw.length in MIN_PW_LEN..MAX_PW_LEN
     private fun getSignNicknameValid(userNickname: String) = userNickname.isNotBlank()
     private fun getSignAgeValid(userAge: String) = userAge.trim().length in MIN_AGE_LEN..MAX_AGE_LEN
+
+    fun setUserInfo(userData: User) =
+        viewModelScope.launch { MainApplication.prefs.setUser(userData) }
 
     companion object {
         const val MIN_ID_LEN = 6

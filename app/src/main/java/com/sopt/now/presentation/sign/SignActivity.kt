@@ -15,7 +15,6 @@ import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_AGE
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_ID
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_NICKNAME
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_PW
-import com.sopt.now.presentation.util.KeyStorage.USER_DATA
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -31,7 +30,10 @@ class SignActivity : BindingActivity<ActivitySignBinding>(R.layout.activity_sign
         signViewModel.signValid.flowWithLifecycle(lifecycle).onEach {
             when (it) {
                 is UiState.Loading -> Unit
-                is UiState.Success -> navigateToLogin(it.data)
+                is UiState.Success -> {
+                    navigateToLogin(it.data)
+                }
+
                 is UiState.Failure -> initErrorMessage(it.errorMessage)
             }
         }.launchIn(lifecycleScope)
@@ -47,9 +49,8 @@ class SignActivity : BindingActivity<ActivitySignBinding>(R.layout.activity_sign
     }
 
     private fun navigateToLogin(user: User) {
-        Intent(this@SignActivity, LoginActivity::class.java).apply {
-            putExtra(USER_DATA, user)
-        }.let { setResult(RESULT_OK, it) }
+        setResult(RESULT_OK, Intent(this@SignActivity, LoginActivity::class.java))
+        signViewModel.setUserInfo(user)
         finish()
     }
 
