@@ -4,10 +4,8 @@
     <!-- 로그인 페이지 -->
     <string name="tv_login_title">Welcome to Sopt</string>
     <string name="btn_login_login">로그인 하기</string>
-    <string name="success_message_login_sign">회원가입에 성공하였습니다!</string>
     <string name="error_message_login_sign">회원가입에 실패하였습니다!</string>
-    <string name="success_message_login_login">로그인에 성공하였습니다!</string>
-    <string name="error_message_login_login">알맞은 ID와 비밀번호를 입력해주세요.</string>
+    <string name="error_message_login_login">ID와 비밀번호를 입력해주세요.</string>
 
     <!-- 로그인 & 회원가입 페이지 -->
     <string name="et_login_id_hint">아이디를 입력해주세요.</string>
@@ -17,25 +15,25 @@
     <!-- 로그인 & 회원가입 & 마이 페이지 -->
     <string name="tv_login_id">ID</string>
     <string name="tv_login_pw">비밀번호</string>
+    <string name="tv_sign_tel">전화번호</string>
 
     <!-- 회원가입 페이지 -->
     <string name="tv_sign_title">SIGN UP</string>
     <string name="tv_sign_nickname">닉네임</string>
     <string name="et_sign_nickname_hint">닉네임을 입력해주세요.</string>
-    <string name="tv_sign_age">나이</string>
-    <string name="et_sign_age_hint">나이를 입력해주세요.</string>
+    <string name="et_sign_tel_hint">전화번호를 입력해주세요.</string>
     <string name="error_message_sign_invalid_id">ID를 6글자 이상 10글자 이하로 입력해주세요.</string>
-    <string name="error_message_sign_invalid_pw">비밀번호를 8글자 이상 12글자 이하로 입력해주세요.</string>
+    <string name="error_message_sign_invalid_pw">비밀번호를 8글자 이상, 숫자, 문자(a-z, A-Z), 특수문자 포함하여 입력해주세요.</string>
     <string name="error_message_sign_invalid_nickname">닉네임을 공백 제외 1글자 이상으로 입력해주세요.</string>
-    <string name="error_message_sign_invalid_age">나이를 1글자 이상 3글자 이하로 입력해주세요.</string>
-
-    <!-- 마이 페이지 -->
-    <string name="tv_my_page_dot">·</string>
+    <string name="error_message_sign_invalid_tel">전화번호를 010–0000–0000 형식으로 입력해주세요.</string>
 
     <!-- 홈 페이지 -->
     <string name="toast_main_back">종료하시려면 한 번 더 눌러주세요.</string>
     <string name="item_menu_home_home">홈</string>
     <string name="item_menu_home_search">검색</string>
     <string name="item_menu_home_mypage">마이페이지</string>
+
+    <!-- 마이 페이지 -->
+    <string name="tv_my_page_member_id">Member ID</string>
 
 </resources>
