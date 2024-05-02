@@ -10,7 +10,7 @@ class FriendViewHolder(private val binding: ItemFriendBinding) :
     fun onBind(friendData: Friend) {
         binding.run {
             Glide.with(root.context).load(friendData.avatar).into(ivFriendProfile)
-            tvFriendName.text = friendData.firstName + friendData.lastName
+            tvFriendName.text = "${friendData.lastName}\n${friendData.firstName}"
             tvFriendSelfDescription.text = friendData.email
         }
     }
