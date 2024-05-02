@@ -11,6 +11,8 @@
         android:layout_height="0dp"
         android:layout_marginVertical="10dp"
         android:layout_marginStart="20dp"
+        android:background="@drawable/shape_line_15_rect"
+        android:clipToOutline="true"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1"
@@ -20,12 +22,13 @@
 
     <TextView
         android:id="@+id/tv_friend_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/iv_friend_profile"
+        app:layout_constraintEnd_toStartOf="@id/tv_friend_self_description"
         app:layout_constraintStart_toEndOf="@id/iv_friend_profile"
         app:layout_constraintTop_toTopOf="@id/iv_friend_profile"
         tools:text="기먼지" />
@@ -37,12 +40,13 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/shape_green_main_line_50_rect"
         android:gravity="end"
-        android:textSize="13sp"
         android:maxLines="1"
         android:paddingHorizontal="10dp"
         android:paddingVertical="4dp"
+        android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_friend_profile"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_friend_name"
         app:layout_constraintTop_toTopOf="@id/iv_friend_profile"
         tools:text="안녕 나는 집에 가고 싶어" />
 
