@@ -11,7 +11,7 @@ import com.sopt.now.databinding.FragmentHomeBinding
 import com.sopt.now.presentation.home.friend.FriendAdapter
 import com.sopt.now.presentation.home.friend.FriendItemDecorator
 import com.sopt.now.presentation.home.user.UserAdapter
-import com.sopt.now.presentation.model.Friend
+import com.sopt.now.presentation.home.friend.Friend
 import timber.log.Timber
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {

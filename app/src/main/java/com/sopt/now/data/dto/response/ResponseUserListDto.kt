@@ -1,6 +1,6 @@
 package com.sopt.now.data.dto.response
 
-import com.sopt.now.presentation.model.Friend
+import com.sopt.now.presentation.home.friend.Friend
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

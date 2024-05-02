@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.core.util.view.UiState
 import com.sopt.now.data.ServicePool
-import com.sopt.now.presentation.model.Friend
-import com.sopt.now.presentation.model.User
+import com.sopt.now.presentation.home.friend.Friend
+import com.sopt.now.presentation.home.user.User
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {

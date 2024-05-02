@@ -3,7 +3,6 @@ package com.sopt.now.presentation.home.friend
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sopt.now.databinding.ItemFriendBinding
-import com.sopt.now.presentation.model.Friend
 
 class FriendViewHolder(private val binding: ItemFriendBinding) :
     RecyclerView.ViewHolder(binding.root) {
