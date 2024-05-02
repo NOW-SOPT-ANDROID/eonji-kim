@@ -12,3 +12,7 @@ object KeyStorage {
     const val ERROR_SIGN_NICKNAME = "error_sign_nickname"
     const val ERROR_SIGN_TEL = "error_sign_tel"
 }
+
+object DialogTag {
+    const val CHANGE_PW = "change_pw"
+}
