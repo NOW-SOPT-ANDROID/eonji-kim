@@ -1,9 +1,13 @@
 package com.sopt.now.presentation.model
 
-import androidx.annotation.DrawableRes
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Friend(
-    @DrawableRes val profileImage: Int,
-    val name: String,
-    val selfDescription: String,
-)
+    val id: Int,
+    val email: String,
+    val firstName: String,
+    val lastName: String,
+    val avatar: String,
+) : Parcelable
