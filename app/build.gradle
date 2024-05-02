@@ -21,7 +21,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "BASE_URL", properties["base.url"]
+        buildConfigField "String", "AUTH_BASE_URL", properties["base.auth.url"]
+        buildConfigField "String", "USER_BASE_URL", properties["base.user.url"]
     }
 
     buildTypes {
