@@ -37,6 +37,12 @@ import com.sopt.now.compose.R
 import com.sopt.now.compose.component.textfield.TextFieldWithTitle
 import com.sopt.now.compose.model.User
 import com.sopt.now.compose.presentation.login.LoginActivity
+import com.sopt.now.compose.presentation.sign.SignActivity.Companion.MAX_AGE_LEN
+import com.sopt.now.compose.presentation.sign.SignActivity.Companion.MAX_ID_LEN
+import com.sopt.now.compose.presentation.sign.SignActivity.Companion.MAX_PW_LEN
+import com.sopt.now.compose.presentation.sign.SignActivity.Companion.MIN_AGE_LEN
+import com.sopt.now.compose.presentation.sign.SignActivity.Companion.MIN_ID_LEN
+import com.sopt.now.compose.presentation.sign.SignActivity.Companion.MIN_PW_LEN
 import com.sopt.now.compose.ui.theme.GreenMain
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import com.sopt.now.compose.ui.theme.White
@@ -76,14 +82,14 @@ fun SignScreen() {
         // Id
         TextFieldWithTitle("ID", id, { newId ->
             id = newId
-            isIdValid = id.length in 6..10
+            isIdValid = id.length in MIN_ID_LEN..MAX_ID_LEN
         }, "아이디를 입력해주세요")
         // Pw
         TextFieldWithTitle("비밀번호",
             pw,
             { newPw ->
                 pw = newPw
-                isPwValid = pw.length in 8..12
+                isPwValid = pw.length in MIN_PW_LEN..MAX_PW_LEN
             },
             "비밀번호를 입력해주세요",
             KeyboardType.Password,
@@ -104,7 +110,7 @@ fun SignScreen() {
         // Age
         TextFieldWithTitle("나이", age, { newAge ->
             age = newAge
-            isAgeValid = age.trim().length in 1..3
+            isAgeValid = age.trim().length in MIN_AGE_LEN..MAX_AGE_LEN
         }, "나이를 입력해주세요")
 
         Spacer(modifier = Modifier.weight(1f))
