@@ -2,7 +2,8 @@ package com.sopt.now.data
 
 import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.sopt.now.BuildConfig.BASE_URL
+import com.sopt.now.BuildConfig.AUTH_BASE_URL
+import com.sopt.now.BuildConfig.USER_BASE_URL
 import com.sopt.now.data.api.AuthServiceApi
 import com.sopt.now.data.api.UserServiceApi
 import kotlinx.serialization.json.Json
@@ -25,18 +26,17 @@ object ApiFactory {
         .addInterceptor(getLogOkHttpClient())
         .build()
 
-    val retrofit: Retrofit by lazy {
+    fun retrofit(url: String): Retrofit =
         Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(url)
             .client(okHttpClient())
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
             .build()
-    }
 
-    inline fun <reified T> create(): T = retrofit.create(T::class.java)
+    inline fun <reified T, B> create(url: B): T = retrofit(url.toString()).create(T::class.java)
 }
 
 object ServicePool {
-    val authServiceApi = ApiFactory.create<AuthServiceApi>()
-    val userServiceApi = ApiFactory.create<UserServiceApi>()
+    val authServiceApi = ApiFactory.create<AuthServiceApi, String>(AUTH_BASE_URL)
+    val userServiceApi = ApiFactory.create<UserServiceApi, String>(USER_BASE_URL)
 }
