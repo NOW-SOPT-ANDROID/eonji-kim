@@ -5,7 +5,7 @@ import com.sopt.now.R
 import com.sopt.now.core.base.BindingFragment
 import com.sopt.now.core.util.fragment.snackBar
 import com.sopt.now.core.util.view.UiState
-import com.sopt.now.data.dto.response.ResponseGetUserInfoDataDto
+import com.sopt.now.data.dto.response.ResponseUserInfoDataDto
 import com.sopt.now.databinding.FragmentMyPageBinding
 import timber.log.Timber
 
@@ -30,7 +30,7 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
         snackBar(binding.root) { "유저조회 실패 : $errorMessage" }
     }
 
-    private fun initResultLoginUserInformation(data: ResponseGetUserInfoDataDto) {
+    private fun initResultLoginUserInformation(data: ResponseUserInfoDataDto) {
         with(binding) {
             tvMyPageMemberIdValue.text = "${myPageViewModel.getUserMemberId()}번"
             tvMyPageNicknameValue.text = data.nickname
