@@ -1,4 +1,4 @@
-package com.sopt.now.presentation.model
+package com.sopt.now.presentation.home.user
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

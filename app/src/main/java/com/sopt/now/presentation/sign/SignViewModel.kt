@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.data.ServicePool
 import com.sopt.now.data.dto.request.RequestSignDto
-import com.sopt.now.presentation.model.User
+import com.sopt.now.presentation.home.user.User
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_ID
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_NICKNAME
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_PW
