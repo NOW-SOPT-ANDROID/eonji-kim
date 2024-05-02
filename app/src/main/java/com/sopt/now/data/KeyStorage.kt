@@ -9,4 +9,5 @@ object KeyStorage {
     const val USERS = "users"
     const val MEMBER_ID = "memberId"
     const val PAGE = "page"
+    const val PASSWORD = "password"
 }
