@@ -37,4 +37,11 @@
     <string name="tv_my_page_member_id">Member ID</string>
     <string name="tv_my_page_pw_change">비밀번호 변경</string>
 
+    <!-- 마이 페이지 비밀번호 변경 다이얼로그 -->
+    <string name="tf_my_page_dialog_pw_change_before">기존 비밀번호를 입력해주세요.</string>
+    <string name="tf_my_page_dialog_pw_change_after">새로운 비밀번호를 입력해주세요.</string>
+    <string name="tf_my_page_dialog_pw_change_check">새로운 비밀번호를 한번 더 입력해주세요.</string>
+    <string name="btn_my_page_dialog_cancel">취소</string>
+    <string name="btn_my_page_dialog_store">저장</string>
+
 </resources>
