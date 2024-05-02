@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">NOW SOPT Android</string>
+
+    <!-- login 페이지 -->
+    <string name="toast_login_sign_success">회원가입에 성공하였습니다!</string>
+    <string name="toast_login_Sign_fail">회원가입에 실패하였습니다!</string>
+
+    <!-- sign 페이지 -->
+    <string name="toast_sign_id_condition">ID를 6글자 이상 10글자 이하로 입력해주세요.</string>
+    <string name="toast_sign_pw_condition">비밀번호를 8글자 이상 12글자 이하로 입력해주세요.</string>
+    <string name="toast_sign_nickname_condition">닉네임을 공백 제외 1글자 이상으로 입력해주세요.</string>
+    <string name="toast_sign_age_condition">나이를 1글자 이상 3글자 이하로 입력해주세요.</string>
+
+    <!-- home 페이지 -->
+    <string name="toast_home_back">종료하시려면 한 번 더 눌러주세요.</string>
 </resources>
