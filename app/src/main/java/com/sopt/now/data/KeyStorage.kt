@@ -7,4 +7,6 @@ object KeyStorage {
     const val INFO = "info"
     const val API = "api"
     const val USERS = "users"
+    const val MEMBER_ID = "memberId"
+    const val PAGE = "page"
 }
