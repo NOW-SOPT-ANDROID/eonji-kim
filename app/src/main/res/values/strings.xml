@@ -35,5 +35,6 @@
 
     <!-- 마이 페이지 -->
     <string name="tv_my_page_member_id">Member ID</string>
+    <string name="tv_my_page_pw_change">비밀번호 변경</string>
 
 </resources>
