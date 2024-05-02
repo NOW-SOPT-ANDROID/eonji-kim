@@ -27,7 +27,7 @@ class FriendAdapter() : ListAdapter<Friend, FriendViewHolder>(FriendAdapterDiffC
     companion object {
         private val FriendAdapterDiffCallback =
             ItemDiffCallback<Friend>(
-                onItemsTheSame = { old, new -> old.name == new.name },
+                onItemsTheSame = { old, new -> old.id == new.id },
                 onContentsTheSame = { old, new -> old == new }
             )
     }
