@@ -40,17 +40,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.now.compose.R
 import com.sopt.now.compose.model.BottomNavigationItem
-import com.sopt.now.compose.model.User
+import com.sopt.now.compose.presentation.myPage.MyPageScreen
+import com.sopt.now.compose.presentation.search.SearchScreen
 import com.sopt.now.compose.ui.theme.GreenMain
 import com.sopt.now.compose.ui.theme.Grey300
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import com.sopt.now.compose.ui.theme.YellowMain
-import com.sopt.now.compose.util.KeyStorage
 
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val user = intent.getParcelableExtra(KeyStorage.USER_DATA) ?: User("", "", "", "")
 
         setContent {
             NOWSOPTAndroidTheme {
@@ -58,7 +57,7 @@ class HomeActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HomeContainer(user)
+                    HomeContainer()
                 }
             }
         }
@@ -67,7 +66,7 @@ class HomeActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeContainer(user: User) {
+fun HomeContainer() {
     val context = LocalContext.current
     var backPressedState by remember { mutableStateOf(true) }
     var backPressedTime = 0L
@@ -142,9 +141,9 @@ fun HomeContainer(user: User) {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             when (selectedItem) {
-                0 -> HomeScreen(user)
+                0 -> HomeScreen()
                 1 -> SearchScreen()
-                2 -> MyPageScreen(user)
+                2 -> MyPageScreen()
             }
         }
     }
@@ -154,6 +153,6 @@ fun HomeContainer(user: User) {
 @Composable
 fun HomePreview() {
     NOWSOPTAndroidTheme {
-        HomeContainer(User("id_test", "pw_test", "nickname_test", "age_test"))
+        HomeContainer()
     }
 }
