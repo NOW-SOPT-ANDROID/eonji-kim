@@ -8,10 +8,10 @@ import com.sopt.now.core.base.BindingFragment
 import com.sopt.now.core.util.fragment.snackBar
 import com.sopt.now.core.util.view.UiState
 import com.sopt.now.databinding.FragmentHomeBinding
+import com.sopt.now.presentation.home.friend.Friend
 import com.sopt.now.presentation.home.friend.FriendAdapter
 import com.sopt.now.presentation.home.friend.FriendItemDecorator
 import com.sopt.now.presentation.home.user.UserAdapter
-import com.sopt.now.presentation.home.friend.Friend
 import timber.log.Timber
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
