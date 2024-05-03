@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -33,23 +34,23 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.textfield.TextFieldWithTitle
-import com.sopt.now.compose.model.User
-import com.sopt.now.compose.presentation.MainActivity
 import com.sopt.now.compose.presentation.home.HomeActivity
 import com.sopt.now.compose.presentation.sign.SignActivity
 import com.sopt.now.compose.ui.theme.GreenMain
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import com.sopt.now.compose.ui.theme.White
 import com.sopt.now.compose.ui.theme.YellowMain
-import com.sopt.now.compose.util.KeyStorage.USER_DATA
+import com.sopt.now.compose.util.KeyStorage.ERROR_LOGIN_ID_PW
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
     // 상태 관리를 위한 state 변수 선언
     val context = LocalContext.current
-    var user by remember { mutableStateOf(User("", "", "", "")) }
+    val lifecycleOwner = LocalLifecycleOwner.current
+
     var id by remember { mutableStateOf("") }
     var pw by remember { mutableStateOf("") }
     var pwVisibility by remember { mutableStateOf(false) }
@@ -60,19 +61,41 @@ fun LoginScreen() {
         rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { result ->
             result.data?.run {
                 if (result.resultCode == Activity.RESULT_OK) {
-                    user = getParcelableExtra(USER_DATA) ?: User("", "", "", "")
-
                     Toast.makeText(
                         context,
                         context.getString(R.string.toast_login_sign_success), Toast.LENGTH_SHORT
                     ).show()
                 } else Toast.makeText(
                     context,
-                    context.getString(R.string.toast_login_Sign_fail),
+                    context.getString(R.string.toast_login_sign_fail),
                     Toast.LENGTH_SHORT
                 ).show()
             }
         }
+
+    loginViewModel.postLogin.observe(lifecycleOwner) {
+        when (it.isSuccess) {
+            true -> {
+                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                Intent(context, HomeActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }.let { context.startActivity(it) }
+            }
+
+            false -> {
+                when (it.message) {
+                    ERROR_LOGIN_ID_PW -> Toast.makeText(
+                        context,
+                        context.getString(R.string.toast_login_fail),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    else -> Toast.makeText(context, "로그인 실패 : ${it.message}", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -110,17 +133,7 @@ fun LoginScreen() {
 
         // LoginBtn
         Button(
-            onClick = {
-                if (id.isNotBlank() && id == user.id && pw.isNotBlank() && pw == user.pw
-                ) {
-                    Toast.makeText(context, "로그인에 성공하였습니다!", Toast.LENGTH_SHORT).show()
-
-                    Intent(context, HomeActivity::class.java).apply {
-                        putExtra(USER_DATA, user)
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    }.let { context.startActivity(it) }
-                } else Toast.makeText(context, "알맞은 ID와 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
-            },
+            onClick = { loginViewModel.postLogin(id, pw) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 15.dp),
