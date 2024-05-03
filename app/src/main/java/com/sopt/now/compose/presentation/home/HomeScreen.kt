@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -15,6 +16,8 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.text.TextWithRow
@@ -24,6 +27,8 @@ import com.sopt.now.compose.ui.theme.GreenMain
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import com.sopt.now.compose.ui.theme.YellowMain
 import com.sopt.now.compose.util.UiState
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
 @Composable
@@ -35,21 +40,23 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
     var userData by remember { mutableStateOf(emptyList<User>()) }
     var friendData by remember { mutableStateOf(emptyList<Friend>()) }
 
-    homeViewModel.getUserList.observe(lifecycleOwner) {
-        when (it) {
-            is UiState.Success -> {
-                userData = homeViewModel.mockUserList
-                friendData = it.data ?: emptyList()
+    LaunchedEffect(homeViewModel.getUserList, lifecycleOwner) {
+        homeViewModel.getUserList.flowWithLifecycle(lifecycleOwner.lifecycle).onEach {
+            when (it) {
+                is UiState.Success -> {
+                    userData = homeViewModel.mockUserList
+                    friendData = it.data ?: emptyList()
+                }
+
+                is UiState.Failure -> Toast.makeText(
+                    context,
+                    "유저 리스트 조회 실패 : ${it.errorMessage}",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                is UiState.Loading -> Timber.d("로딩중")
             }
-
-            is UiState.Failure -> Toast.makeText(
-                context,
-                "유저 리스트 조회 실패 : ${it.errorMessage}",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            is UiState.Loading -> Timber.d("로딩중")
-        }
+        }.launchIn(lifecycleOwner.lifecycleScope)
     }
 
     LazyColumn(
