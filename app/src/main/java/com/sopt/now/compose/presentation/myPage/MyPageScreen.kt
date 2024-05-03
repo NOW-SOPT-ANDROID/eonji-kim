@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,11 +26,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.text.TextWithTitle
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import com.sopt.now.compose.util.UiState
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
 @Composable
@@ -43,25 +48,27 @@ fun MyPageScreen(myPageViewModel: MyPageViewModel = viewModel()) {
     var userNickname by remember { mutableStateOf("") }
     var userTel by remember { mutableStateOf("") }
 
-    myPageViewModel.getUserInfo.observe(lifecycleOwner) {
-        when (it) {
-            is UiState.Success -> {
-                with(it.data.data) {
-                    memberId = "${myPageViewModel.getUserMemberId()}번"
-                    userNickname = nickname
-                    userId = authenticationId
-                    userTel = phone
+    LaunchedEffect(myPageViewModel.getUserInfo, lifecycleOwner) {
+        myPageViewModel.getUserInfo.flowWithLifecycle(lifecycleOwner.lifecycle).onEach {
+            when (it) {
+                is UiState.Success -> {
+                    with(it.data.data) {
+                        memberId = "${myPageViewModel.getUserMemberId()}번"
+                        userNickname = nickname
+                        userId = authenticationId
+                        userTel = phone
+                    }
                 }
+
+                is UiState.Failure -> Toast.makeText(
+                    context,
+                    "유저조회 실패 : ${it.errorMessage}",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                is UiState.Loading -> Timber.d("로딩중")
             }
-
-            is UiState.Failure -> Toast.makeText(
-                context,
-                "유저조회 실패 : ${it.errorMessage}",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            is UiState.Loading -> Timber.d("로딩중")
-        }
+        }.launchIn(lifecycleOwner.lifecycleScope)
     }
 
     Column(
