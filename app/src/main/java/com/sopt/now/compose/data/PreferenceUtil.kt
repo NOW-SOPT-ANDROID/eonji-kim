@@ -2,7 +2,7 @@ package com.sopt.now.compose.data
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.sopt.now.compose.data.KeyStorage.MEMBER_ID
+import com.sopt.now.compose.util.KeyStorage.MEMBER_ID
 
 class PreferenceUtil(context: Context) {
     private val prefs: SharedPreferences =
