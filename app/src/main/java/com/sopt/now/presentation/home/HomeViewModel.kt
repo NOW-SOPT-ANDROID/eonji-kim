@@ -19,7 +19,7 @@ class HomeViewModel : ViewModel() {
         )
     )
 
-    private val _getUserList = MutableLiveData<UiState<List<Friend>?>>()
+    private val _getUserList = MutableLiveData<UiState<List<Friend>?>>(UiState.Loading)
     val getUserList: MutableLiveData<UiState<List<Friend>?>> = _getUserList
 
     init {
