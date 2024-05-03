@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,18 +35,26 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.textfield.TextFieldWithTitle
 import com.sopt.now.compose.model.User
+import com.sopt.now.compose.presentation.home.HomeActivity
 import com.sopt.now.compose.presentation.login.LoginActivity
 import com.sopt.now.compose.ui.theme.GreenMain
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import com.sopt.now.compose.ui.theme.White
+import com.sopt.now.compose.util.KeyStorage
 import com.sopt.now.compose.util.KeyStorage.ERROR_SIGN_ID
 import com.sopt.now.compose.util.KeyStorage.ERROR_SIGN_NICKNAME
 import com.sopt.now.compose.util.KeyStorage.ERROR_SIGN_PW
 import com.sopt.now.compose.util.KeyStorage.ERROR_SIGN_TEL
+import com.sopt.now.compose.util.UiState
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import timber.log.Timber
 
 @Composable
 fun SignScreen(signViewModel: SignViewModel = viewModel()) {
@@ -61,48 +70,52 @@ fun SignScreen(signViewModel: SignViewModel = viewModel()) {
     val pwIcon =
         painterResource(id = if (pwVisibility) R.drawable.ic_pw_visible else R.drawable.ic_pw_invisible)
 
-    signViewModel.postSign.observe(lifecycleOwner) {
-        when (it.isSuccess) {
-            true -> {
-                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                (context as? Activity)?.setResult(
-                    RESULT_OK,
-                    Intent(context, LoginActivity::class.java)
-                )
-                (context as? Activity)?.finish()
-            }
-
-            false -> {
-                when (it.message) {
-                    ERROR_SIGN_ID -> Toast.makeText(
-                        context,
-                        context.getString(R.string.toast_sign_id_condition),
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    ERROR_SIGN_PW -> Toast.makeText(
-                        context,
-                        context.getString(R.string.toast_sign_pw_condition),
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    ERROR_SIGN_NICKNAME -> Toast.makeText(
-                        context,
-                        context.getString(R.string.toast_sign_nickname_condition),
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    ERROR_SIGN_TEL -> Toast.makeText(
-                        context,
-                        context.getString(R.string.toast_sign_tel_condition),
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    else -> Toast.makeText(context, "회원가입 실패 : ${it.message}", Toast.LENGTH_SHORT)
-                        .show()
+    LaunchedEffect(signViewModel.postSign, lifecycleOwner) {
+        signViewModel.postSign.flowWithLifecycle(lifecycleOwner.lifecycle).onEach {
+            when (it) {
+                is UiState.Success -> {
+                    Toast.makeText(context, it.data.toString(), Toast.LENGTH_SHORT).show()
+                    (context as? Activity)?.setResult(
+                        RESULT_OK,
+                        Intent(context, LoginActivity::class.java)
+                    )
+                    (context as? Activity)?.finish()
                 }
+
+                is UiState.Failure -> {
+                    when (it.errorMessage) {
+                        ERROR_SIGN_ID -> Toast.makeText(
+                            context,
+                            context.getString(R.string.toast_sign_id_condition),
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        ERROR_SIGN_PW -> Toast.makeText(
+                            context,
+                            context.getString(R.string.toast_sign_pw_condition),
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        ERROR_SIGN_NICKNAME -> Toast.makeText(
+                            context,
+                            context.getString(R.string.toast_sign_nickname_condition),
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        ERROR_SIGN_TEL -> Toast.makeText(
+                            context,
+                            context.getString(R.string.toast_sign_tel_condition),
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        else -> Toast.makeText(context, "회원가입 실패 : ${it.errorMessage}", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+
+                is UiState.Loading -> Timber.d("로딩중")
             }
-        }
+        }.launchIn(lifecycleOwner.lifecycleScope)
     }
 
     Column(
