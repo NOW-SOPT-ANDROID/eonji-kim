@@ -7,11 +7,13 @@ import com.sopt.now.compose.data.ServicePool
 import com.sopt.now.compose.data.dto.response.ResponseUserInfoDto
 import com.sopt.now.compose.util.MainApplication
 import com.sopt.now.compose.util.UiState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class MyPageViewModel : ViewModel() {
-    private val _getUserInfo = MutableLiveData<UiState<ResponseUserInfoDto>>()
-    val getUserInfo: MutableLiveData<UiState<ResponseUserInfoDto>> = _getUserInfo
+    private val _getUserInfo = MutableStateFlow<UiState<ResponseUserInfoDto>>(UiState.Loading)
+    val getUserInfo: StateFlow<UiState<ResponseUserInfoDto>> = _getUserInfo
 
     init {
         getUserInfo()
