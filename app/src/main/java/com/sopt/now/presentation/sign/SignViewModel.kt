@@ -3,6 +3,7 @@ package com.sopt.now.presentation.sign
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sopt.now.core.util.view.UiState
 import com.sopt.now.data.ServicePool
 import com.sopt.now.data.dto.request.RequestSignDto
 import com.sopt.now.presentation.home.user.User
@@ -14,8 +15,8 @@ import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 class SignViewModel : ViewModel() {
-    private val _postSign = MutableLiveData<SignState>()
-    val postSign: MutableLiveData<SignState> = _postSign
+    private val _postSign = MutableLiveData<UiState<Any?>>(UiState.Loading)
+    val postSign: MutableLiveData<UiState<Any?>> = _postSign
 
     fun postSign(user: User) = viewModelScope.launch {
         if (checkSignValid(user) == null) {
@@ -27,30 +28,23 @@ class SignViewModel : ViewModel() {
                 {
                     if (it.code() == 201) {
                         _postSign.value =
-                            SignState(
-                                true,
-                                "회원가입 성공! 유저의 ID는 ${it.headers()["location"]} 입니둥"
-                            ).apply {
-//                                MainApplication.prefs.setUser(
-//                                    User(user.id, user.pw, user.nickname, user.tel)
-//                                )
-                            }
+                            UiState.Success("회원가입 성공! 유저의 ID는 ${it.headers()["location"]} 입니둥")
                     } else _postSign.value =
-                        SignState(false, "${it.errorBody()?.string()?.split("\"")?.get(5)}")
+                        UiState.Failure("${it.errorBody()?.string()?.split("\"")?.get(5)}")
                 },
-                { _postSign.value = SignState(false, "${it.message}") }
+                { _postSign.value = UiState.Failure(it.message.toString()) }
             )
         } else {
-            _postSign.value = checkSignValid(user)
+            _postSign.value = UiState.Failure(checkSignValid(user).toString())
         }
     }
 
-    private fun checkSignValid(user: User): SignState? {
+    private fun checkSignValid(user: User): String? {
         return when {
-            !getSignIdValid(user.id) -> SignState(false, ERROR_SIGN_ID)
-            !getSignPwValid(user.pw) -> SignState(false, ERROR_SIGN_PW)
-            !getSignNicknameValid(user.nickname) -> SignState(false, ERROR_SIGN_NICKNAME)
-            !getSignTelValid(user.tel) -> SignState(false, ERROR_SIGN_TEL)
+            !getSignIdValid(user.id) -> ERROR_SIGN_ID
+            !getSignPwValid(user.pw) -> ERROR_SIGN_PW
+            !getSignNicknameValid(user.nickname) -> ERROR_SIGN_NICKNAME
+            !getSignTelValid(user.tel) -> ERROR_SIGN_TEL
             else -> null
         }
     }

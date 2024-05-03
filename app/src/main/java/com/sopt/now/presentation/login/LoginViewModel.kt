@@ -4,14 +4,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.core.MainApplication
+import com.sopt.now.core.util.view.UiState
 import com.sopt.now.data.ServicePool
 import com.sopt.now.data.dto.request.RequestLoginDto
 import com.sopt.now.presentation.util.KeyStorage.ERROR_LOGIN_ID_PW
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
-    private val _postLogin = MutableLiveData<LoginState>()
-    val postLogin: MutableLiveData<LoginState> = _postLogin
+    private val _postLogin = MutableLiveData<UiState<Any?>>(UiState.Loading)
+    val postLogin: MutableLiveData<UiState<Any?>> = _postLogin
 
     fun postLogin(id: String, pw: String) = viewModelScope.launch {
         if (checkLoginValid(id, pw)) {
@@ -21,17 +22,16 @@ class LoginViewModel : ViewModel() {
                 {
                     if (it.code() == 200) {
                         _postLogin.value =
-                            LoginState(
-                                true,
-                                "로그인 성공! 유저의 ID는 ${it.headers()["location"]} 입니둥"
-                            ).apply { setUserMemberId(it.headers()["location"]?.toInt() ?: -1) }
+                            UiState.Success("로그인 성공! 유저의 ID는 ${it.headers()["location"]} 입니둥")
+                                .apply { setUserMemberId(it.headers()["location"]?.toInt() ?: -1) }
                     } else _postLogin.value =
-                        LoginState(false, "${it.errorBody()?.string()?.split("\"")?.get(5)}")
+                        UiState.Failure("${it.errorBody()?.string()?.split("\"")?.get(5)}")
+
                 },
-                { _postLogin.value = LoginState(false, "${it.message}") }
+                { _postLogin.value = UiState.Failure(it.message.toString()) }
             )
         } else {
-            _postLogin.value = LoginState(false, ERROR_LOGIN_ID_PW)
+            _postLogin.value = UiState.Failure(ERROR_LOGIN_ID_PW)
         }
     }
 
