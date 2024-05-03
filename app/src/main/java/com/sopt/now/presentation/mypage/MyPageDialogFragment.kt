@@ -41,6 +41,7 @@ class MyPageDialogFragment() :
                     initMessage("비밀번호 변경 완료 : ${it.data.message}")
                     dismiss()
                 }
+
                 is UiState.Failure -> initMessage(it.errorMessage)
                 is UiState.Loading -> Timber.d("로딩중")
             }
@@ -48,7 +49,7 @@ class MyPageDialogFragment() :
     }
 
     private fun initMessage(message: String) {
-        snackBar(binding.root) {message}
+        snackBar(binding.root) { message }
     }
 
     private fun initCancelBtnClickListener() {
