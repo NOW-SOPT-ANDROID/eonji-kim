@@ -2,7 +2,6 @@ package com.sopt.now.compose.presentation.login
 
 import android.app.Activity
 import android.content.Intent
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -46,6 +45,7 @@ import com.sopt.now.compose.ui.theme.White
 import com.sopt.now.compose.ui.theme.YellowMain
 import com.sopt.now.compose.util.KeyStorage.ERROR_LOGIN_ID_PW
 import com.sopt.now.compose.util.UiState
+import com.sopt.now.compose.util.toast
 import timber.log.Timber
 
 @Composable
@@ -63,11 +63,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
     val getResult =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { result ->
             result.data?.run {
-                if (result.resultCode != Activity.RESULT_OK) Toast.makeText(
-                    context,
-                    context.getString(R.string.toast_login_sign_fail),
-                    Toast.LENGTH_SHORT
-                ).show()
+                if (result.resultCode != Activity.RESULT_OK) context.toast(context.getString(R.string.toast_login_sign_fail))
             }
         }
 
@@ -75,7 +71,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
         loginViewModel.postLogin.observe(lifecycleOwner) {
             when (it) {
                 is UiState.Success -> {
-                    Toast.makeText(context, it.data.toString(), Toast.LENGTH_SHORT).show()
+                    context.toast(it.data.toString())
                     Intent(context, HomeActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     }.let { context.startActivity(it) }
@@ -83,17 +79,8 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
 
                 is UiState.Failure -> {
                     when (it.errorMessage) {
-                        ERROR_LOGIN_ID_PW -> Toast.makeText(
-                            context,
-                            context.getString(R.string.toast_login_fail),
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                        else -> Toast.makeText(
-                            context,
-                            "로그인 실패 : ${it.errorMessage}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        ERROR_LOGIN_ID_PW -> context.toast(context.getString(R.string.toast_login_fail))
+                        else -> context.toast("로그인 실패 : ${it.errorMessage}")
                     }
                 }
 

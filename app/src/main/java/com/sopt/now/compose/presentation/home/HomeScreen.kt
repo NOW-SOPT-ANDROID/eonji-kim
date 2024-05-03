@@ -1,6 +1,5 @@
 package com.sopt.now.compose.presentation.home
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -25,6 +24,7 @@ import com.sopt.now.compose.ui.theme.GreenMain
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import com.sopt.now.compose.ui.theme.YellowMain
 import com.sopt.now.compose.util.UiState
+import com.sopt.now.compose.util.toast
 import timber.log.Timber
 
 @Composable
@@ -44,12 +44,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
                     friendData = it.data ?: emptyList()
                 }
 
-                is UiState.Failure -> Toast.makeText(
-                    context,
-                    "유저 리스트 조회 실패 : ${it.errorMessage}",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                is UiState.Failure -> context.toast("유저 리스트 조회 실패 : ${it.errorMessage}")
                 is UiState.Loading -> Timber.d("로딩중")
             }
         }

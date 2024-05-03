@@ -3,7 +3,6 @@ package com.sopt.now.compose.presentation.sign
 import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -48,6 +47,7 @@ import com.sopt.now.compose.util.KeyStorage.ERROR_SIGN_NICKNAME
 import com.sopt.now.compose.util.KeyStorage.ERROR_SIGN_PW
 import com.sopt.now.compose.util.KeyStorage.ERROR_SIGN_TEL
 import com.sopt.now.compose.util.UiState
+import com.sopt.now.compose.util.toast
 import timber.log.Timber
 
 @Composable
@@ -68,7 +68,7 @@ fun SignScreen(signViewModel: SignViewModel = viewModel()) {
         signViewModel.postSign.observe(lifecycleOwner) {
             when (it) {
                 is UiState.Success -> {
-                    Toast.makeText(context, it.data.toString(), Toast.LENGTH_SHORT).show()
+                    context.toast(it.data.toString())
                     (context as? Activity)?.setResult(
                         RESULT_OK,
                         Intent(context, LoginActivity::class.java)
@@ -78,35 +78,11 @@ fun SignScreen(signViewModel: SignViewModel = viewModel()) {
 
                 is UiState.Failure -> {
                     when (it.errorMessage) {
-                        ERROR_SIGN_ID -> Toast.makeText(
-                            context,
-                            context.getString(R.string.toast_sign_id_condition),
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                        ERROR_SIGN_PW -> Toast.makeText(
-                            context,
-                            context.getString(R.string.toast_sign_pw_condition),
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                        ERROR_SIGN_NICKNAME -> Toast.makeText(
-                            context,
-                            context.getString(R.string.toast_sign_nickname_condition),
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                        ERROR_SIGN_TEL -> Toast.makeText(
-                            context,
-                            context.getString(R.string.toast_sign_tel_condition),
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                        else -> Toast.makeText(
-                            context,
-                            "회원가입 실패 : ${it.errorMessage}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        ERROR_SIGN_ID -> context.toast(context.getString(R.string.toast_sign_id_condition))
+                        ERROR_SIGN_PW -> context.toast(context.getString(R.string.toast_sign_pw_condition))
+                        ERROR_SIGN_NICKNAME -> context.toast(context.getString(R.string.toast_sign_nickname_condition))
+                        ERROR_SIGN_TEL -> context.toast(context.getString(R.string.toast_sign_tel_condition))
+                        else -> context.toast("회원가입 실패 : ${it.errorMessage}")
                     }
                 }
 
