@@ -13,10 +13,10 @@ import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 class MyPageViewModel : ViewModel() {
-    private val _getUserInfo = MutableLiveData<UiState<ResponseUserInfoDto>>()
+    private val _getUserInfo = MutableLiveData<UiState<ResponseUserInfoDto>>(UiState.Loading)
     val getUserInfo: MutableLiveData<UiState<ResponseUserInfoDto>> = _getUserInfo
 
-    private val _patchUserPw = MutableLiveData<UiState<ResponseUserPwDto>>()
+    private val _patchUserPw = MutableLiveData<UiState<ResponseUserPwDto>>(UiState.Loading)
     val patchUserPw: MutableLiveData<UiState<ResponseUserPwDto>> = _patchUserPw
 
     init {
@@ -42,7 +42,8 @@ class MyPageViewModel : ViewModel() {
                 { _patchUserPw.value = UiState.Failure(it.message.toString()) }
             )
         } else {
-            _patchUserPw.value = UiState.Failure("비밀번호를 8글자 이상, 숫자, 문자(a-z, A-Z), 특수문자 포함하여 입력해주세요.")
+            _patchUserPw.value =
+                UiState.Failure("비밀번호를 8글자 이상, 숫자, 문자(a-z, A-Z), 특수문자 포함하여 입력해주세요.")
         }
     }
 
