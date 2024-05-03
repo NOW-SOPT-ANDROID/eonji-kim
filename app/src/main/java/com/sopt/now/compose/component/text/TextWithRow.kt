@@ -23,13 +23,14 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberImagePainter
 import com.sopt.now.compose.R
 import com.sopt.now.compose.ui.theme.GreenMain
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 
 @Composable
 fun TextWithRow(
-    painter: Int,
+    painter: Any,
     contentDescription: String,
     profileSize: Dp,
     name: String,
@@ -46,13 +47,23 @@ fun TextWithRow(
             .padding(vertical = rowVertical),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = painterResource(id = painter),
-            contentDescription = contentDescription,
-            modifier = Modifier
-                .size(profileSize)
-                .aspectRatio(1f / 1f),
-        )
+        if (painter is Int) {
+            Image(
+                painter = painterResource(id = painter),
+                contentDescription = contentDescription,
+                modifier = Modifier
+                    .size(profileSize)
+                    .aspectRatio(1f / 1f),
+            )
+        } else if (painter is String) {
+            Image(
+                painter = rememberImagePainter(data = painter),
+                contentDescription = contentDescription,
+                modifier = Modifier
+                    .size(profileSize)
+                    .aspectRatio(1f / 1f),
+            )
+        }
         Spacer(modifier = Modifier.width(spacerWidth))
         Text(
             text = name,
