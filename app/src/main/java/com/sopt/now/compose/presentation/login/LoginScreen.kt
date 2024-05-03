@@ -19,6 +19,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,6 +35,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.textfield.TextFieldWithTitle
@@ -44,6 +47,10 @@ import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import com.sopt.now.compose.ui.theme.White
 import com.sopt.now.compose.ui.theme.YellowMain
 import com.sopt.now.compose.util.KeyStorage.ERROR_LOGIN_ID_PW
+import com.sopt.now.compose.util.UiState
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import timber.log.Timber
 
 @Composable
 fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
@@ -73,28 +80,35 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
             }
         }
 
-    loginViewModel.postLogin.observe(lifecycleOwner) {
-        when (it.isSuccess) {
-            true -> {
-                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                Intent(context, HomeActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                }.let { context.startActivity(it) }
-            }
-
-            false -> {
-                when (it.message) {
-                    ERROR_LOGIN_ID_PW -> Toast.makeText(
-                        context,
-                        context.getString(R.string.toast_login_fail),
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    else -> Toast.makeText(context, "로그인 실패 : ${it.message}", Toast.LENGTH_SHORT)
-                        .show()
+    LaunchedEffect(loginViewModel.postLogin, lifecycleOwner) {
+        loginViewModel.postLogin.flowWithLifecycle(lifecycleOwner.lifecycle).onEach {
+            when (it) {
+                is UiState.Success -> {
+                    Toast.makeText(context, it.data.toString(), Toast.LENGTH_SHORT).show()
+                    Intent(context, HomeActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }.let { context.startActivity(it) }
                 }
+
+                is UiState.Failure -> {
+                    when (it.errorMessage) {
+                        ERROR_LOGIN_ID_PW -> Toast.makeText(
+                            context,
+                            context.getString(R.string.toast_login_fail),
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        else -> Toast.makeText(
+                            context,
+                            "로그인 실패 : ${it.errorMessage}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+                is UiState.Loading -> Timber.d("로딩중")
             }
-        }
+        }.launchIn(lifecycleOwner.lifecycleScope)
     }
 
     Column(
