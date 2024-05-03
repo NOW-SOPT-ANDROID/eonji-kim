@@ -67,12 +67,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
     val getResult =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { result ->
             result.data?.run {
-                if (result.resultCode == Activity.RESULT_OK) {
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.toast_login_sign_success), Toast.LENGTH_SHORT
-                    ).show()
-                } else Toast.makeText(
+                if (result.resultCode != Activity.RESULT_OK) Toast.makeText(
                     context,
                     context.getString(R.string.toast_login_sign_fail),
                     Toast.LENGTH_SHORT
