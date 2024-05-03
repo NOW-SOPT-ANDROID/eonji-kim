@@ -49,7 +49,7 @@ fun MyPageScreen(myPageViewModel: MyPageViewModel = viewModel()) {
     var userTel by remember { mutableStateOf("") }
 
     LaunchedEffect(myPageViewModel.getUserInfo, lifecycleOwner) {
-        myPageViewModel.getUserInfo.flowWithLifecycle(lifecycleOwner.lifecycle).onEach {
+        myPageViewModel.getUserInfo.observe(lifecycleOwner) {
             when (it) {
                 is UiState.Success -> {
                     with(it.data.data) {
@@ -68,7 +68,7 @@ fun MyPageScreen(myPageViewModel: MyPageViewModel = viewModel()) {
 
                 is UiState.Loading -> Timber.d("로딩중")
             }
-        }.launchIn(lifecycleOwner.lifecycleScope)
+        }
     }
 
     Column(

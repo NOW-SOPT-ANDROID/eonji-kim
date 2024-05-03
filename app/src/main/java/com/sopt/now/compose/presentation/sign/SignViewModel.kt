@@ -5,21 +5,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.compose.data.ServicePool
 import com.sopt.now.compose.data.dto.request.RequestSignDto
-import com.sopt.now.compose.data.dto.response.ResponseSignDto
 import com.sopt.now.compose.model.User
 import com.sopt.now.compose.util.KeyStorage.ERROR_SIGN_ID
 import com.sopt.now.compose.util.KeyStorage.ERROR_SIGN_NICKNAME
 import com.sopt.now.compose.util.KeyStorage.ERROR_SIGN_PW
 import com.sopt.now.compose.util.KeyStorage.ERROR_SIGN_TEL
 import com.sopt.now.compose.util.UiState
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 class SignViewModel : ViewModel() {
-    private val _postSign = MutableStateFlow<UiState<Any?>>(UiState.Loading)
-    val postSign: StateFlow<UiState<Any?>> = _postSign
+    private val _postSign = MutableLiveData<UiState<Any?>>(UiState.Loading)
+    val postSign: MutableLiveData<UiState<Any?>> = _postSign
 
     fun postSign(user: User) = viewModelScope.launch {
         if (checkSignValid(user) == null) {

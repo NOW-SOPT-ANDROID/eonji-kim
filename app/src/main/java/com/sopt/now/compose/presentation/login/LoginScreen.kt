@@ -35,8 +35,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.textfield.TextFieldWithTitle
@@ -48,8 +46,6 @@ import com.sopt.now.compose.ui.theme.White
 import com.sopt.now.compose.ui.theme.YellowMain
 import com.sopt.now.compose.util.KeyStorage.ERROR_LOGIN_ID_PW
 import com.sopt.now.compose.util.UiState
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
 @Composable
@@ -76,7 +72,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
         }
 
     LaunchedEffect(loginViewModel.postLogin, lifecycleOwner) {
-        loginViewModel.postLogin.flowWithLifecycle(lifecycleOwner.lifecycle).onEach {
+        loginViewModel.postLogin.observe(lifecycleOwner) {
             when (it) {
                 is UiState.Success -> {
                     Toast.makeText(context, it.data.toString(), Toast.LENGTH_SHORT).show()
@@ -103,7 +99,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
 
                 is UiState.Loading -> Timber.d("로딩중")
             }
-        }.launchIn(lifecycleOwner.lifecycleScope)
+        }
     }
 
     Column(
