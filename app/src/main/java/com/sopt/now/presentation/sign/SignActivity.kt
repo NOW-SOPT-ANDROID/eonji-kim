@@ -6,13 +6,15 @@ import com.sopt.now.R
 import com.sopt.now.core.base.BindingActivity
 import com.sopt.now.core.util.context.snackBar
 import com.sopt.now.core.util.context.toast
+import com.sopt.now.core.util.view.UiState
 import com.sopt.now.databinding.ActivitySignBinding
-import com.sopt.now.presentation.login.LoginActivity
 import com.sopt.now.presentation.home.user.User
+import com.sopt.now.presentation.login.LoginActivity
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_ID
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_NICKNAME
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_PW
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_TEL
+import timber.log.Timber
 
 class SignActivity : BindingActivity<ActivitySignBinding>(R.layout.activity_sign) {
     private val signViewModel by viewModels<SignViewModel>()
@@ -24,9 +26,10 @@ class SignActivity : BindingActivity<ActivitySignBinding>(R.layout.activity_sign
 
     private fun initObserveSign() {
         signViewModel.postSign.observe(this) {
-            when (it.isSuccess) {
-                true -> navigateToLogin(it.message)
-                false -> initErrorMessage(it.message)
+            when (it) {
+                is UiState.Success -> navigateToLogin(it.data.toString())
+                is UiState.Failure -> initErrorMessage(it.errorMessage)
+                is UiState.Loading -> Timber.d("로딩중")
             }
         }
     }

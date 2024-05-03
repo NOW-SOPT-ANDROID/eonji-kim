@@ -8,10 +8,12 @@ import com.sopt.now.R
 import com.sopt.now.core.base.BindingActivity
 import com.sopt.now.core.util.context.snackBar
 import com.sopt.now.core.util.context.toast
+import com.sopt.now.core.util.view.UiState
 import com.sopt.now.databinding.ActivityLoginBinding
 import com.sopt.now.presentation.home.HomeActivity
 import com.sopt.now.presentation.sign.SignActivity
 import com.sopt.now.presentation.util.KeyStorage.ERROR_LOGIN_ID_PW
+import timber.log.Timber
 
 class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
     private val loginViewModel by viewModels<LoginViewModel>()
@@ -44,9 +46,10 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
 
     private fun initObserveLogin() {
         loginViewModel.postLogin.observe(this) {
-            when (it.isSuccess) {
-                true -> navigateToHome(it.message)
-                false -> initErrorMessage(it.message)
+            when (it) {
+                is UiState.Success -> navigateToHome(it.data.toString())
+                is UiState.Failure -> initErrorMessage(it.errorMessage)
+                is UiState.Loading -> Timber.d("로딩중")
             }
         }
     }
