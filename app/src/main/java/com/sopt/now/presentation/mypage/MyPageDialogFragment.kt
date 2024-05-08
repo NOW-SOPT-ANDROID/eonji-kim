@@ -1,8 +1,5 @@
 package com.sopt.now.presentation.mypage
 
-import android.content.DialogInterface
-import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.viewModels
 import com.sopt.now.R
 import com.sopt.now.core.base.BindingDialogFragment
@@ -15,13 +12,6 @@ import timber.log.Timber
 class MyPageDialogFragment() :
     BindingDialogFragment<FragmentMyPageDialogBinding>(R.layout.fragment_my_page_dialog) {
     private val myPageViewModel by viewModels<MyPageViewModel>()
-
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?,
-    ) {
-        super.onViewCreated(view, savedInstanceState)
-    }
 
     override fun initView() {
         initCancelBtnClickListener()
@@ -38,18 +28,14 @@ class MyPageDialogFragment() :
         myPageViewModel.patchUserPw.observe(this) {
             when (it) {
                 is UiState.Success -> {
-                    initMessage("비밀번호 변경 완료 : ${it.data.message}")
+                    snackBar(binding.root) { "비밀번호 변경 완료 : ${it.data.message}" }
                     dismiss()
                 }
 
-                is UiState.Failure -> initMessage(it.errorMessage)
+                is UiState.Failure -> snackBar(binding.root) { it.errorMessage }
                 is UiState.Loading -> Timber.d("로딩중")
             }
         }
-    }
-
-    private fun initMessage(message: String) {
-        snackBar(binding.root) { message }
     }
 
     private fun initCancelBtnClickListener() {
@@ -70,7 +56,4 @@ class MyPageDialogFragment() :
         }
     }
 
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-    }
 }
