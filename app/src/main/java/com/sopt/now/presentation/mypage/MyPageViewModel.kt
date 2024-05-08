@@ -9,6 +9,7 @@ import com.sopt.now.data.ServicePool
 import com.sopt.now.data.dto.request.RequestUserPwDto
 import com.sopt.now.data.dto.response.ResponseUserInfoDto
 import com.sopt.now.data.dto.response.ResponseUserPwDto
+import com.sopt.now.presentation.util.Regex.PW_REGEX
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
@@ -48,7 +49,7 @@ class MyPageViewModel : ViewModel() {
     }
 
     private fun checkPwValid(userPw: String): Boolean {
-        Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=!])(?=\\S+\$).{8,}\$").let {
+        Pattern.compile(PW_REGEX).let {
             return it.matcher(userPw).matches()
         }
     }
