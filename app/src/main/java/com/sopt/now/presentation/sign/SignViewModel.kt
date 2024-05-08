@@ -11,6 +11,8 @@ import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_ID
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_NICKNAME
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_PW
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_TEL
+import com.sopt.now.presentation.util.Regex.PW_REGEX
+import com.sopt.now.presentation.util.Regex.TEL_REGEX
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
@@ -51,20 +53,20 @@ class SignViewModel : ViewModel() {
 
     private fun getSignIdValid(userID: String) = userID.length in MIN_ID_LEN..MAX_ID_LEN
     private fun getSignPwValid(userPw: String): Boolean {
-        Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=!])(?=\\S+\$).{8,}\$").let {
+        Pattern.compile(PW_REGEX).let {
             return it.matcher(userPw).matches()
         }
     }
 
     private fun getSignNicknameValid(userNickname: String) = userNickname.isNotBlank()
     private fun getSignTelValid(userTel: String): Boolean {
-        Pattern.compile("^010-\\d{4}-\\d{4}\$").let {
+        Pattern.compile(TEL_REGEX).let {
             return it.matcher(userTel).matches()
         }
     }
 
     companion object {
-        const val MIN_ID_LEN = 6
-        const val MAX_ID_LEN = 10
+        private const val MIN_ID_LEN = 6
+        private const val MAX_ID_LEN = 10
     }
 }
