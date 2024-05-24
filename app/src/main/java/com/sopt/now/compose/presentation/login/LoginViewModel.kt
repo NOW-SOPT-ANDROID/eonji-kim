@@ -15,7 +15,7 @@ class LoginViewModel : ViewModel() {
     val postLogin: MutableLiveData<UiState<Any?>> = _postLogin
 
     fun postLogin(id: String, pw: String) = viewModelScope.launch {
-        if (checkLoginValid(id, pw)) {
+        if (isLoginBlank(id, pw)) {
             runCatching {
                 ServicePool.authServiceApi.postLogin(RequestLoginDto(id, pw))
             }.fold(
@@ -35,7 +35,7 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    private fun checkLoginValid(id: String, pw: String) =
+    private fun isLoginBlank(id: String, pw: String) =
         getLoginIdEmpty(id) && getLoginPwEmpty(pw)
 
     private fun getLoginIdEmpty(id: String) = id.isNotBlank()
