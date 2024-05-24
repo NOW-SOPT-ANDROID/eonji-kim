@@ -61,8 +61,8 @@ class SignViewModel : ViewModel() {
         }
     }
 
-    companion object {
-        const val MIN_ID_LEN = 6
-        const val MAX_ID_LEN = 10
+    private companion object {
+        private const val MIN_ID_LEN = 6
+        private const val MAX_ID_LEN = 10
     }
 }
