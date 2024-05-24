@@ -1,6 +1,5 @@
 package com.sopt.now.compose.data
 
-import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.sopt.now.compose.BuildConfig.AUTH_BASE_URL
 import com.sopt.now.compose.BuildConfig.USER_BASE_URL
@@ -12,11 +11,12 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import timber.log.Timber
 
 object ApiFactory {
     private fun getLogOkHttpClient(): Interceptor {
         val loggingInterceptor = HttpLoggingInterceptor { message ->
-            Log.d("Retrofit2", "CONNECTION INFO -> $message")
+            Timber.tag("Retrofit2").d("CONNECTION INFO -> $message")
         }
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return loggingInterceptor
