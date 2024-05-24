@@ -57,32 +57,32 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
         // User
         itemsIndexed(userData) { index, user ->
             TextWithRow(
-                R.drawable.img_user_profile_dororo,
-                "user profile img",
-                75.dp,
-                user.nickname,
-                18.sp,
-                user.tel,
-                14.sp,
-                YellowMain,
-                15.dp,
-                12.dp,
+                painter = R.drawable.img_user_profile_dororo,
+                contentDescription = "user profile img",
+                profileSize = 75.dp,
+                name = user.nickname,
+                nameSize = 18.sp,
+                description = user.tel,
+                descriptionSize = 14.sp,
+                descriptionColor = YellowMain,
+                rowVertical = 15.dp,
+                spacerWidth = 12.dp,
             )
         }
 
         // Friend
         itemsIndexed(friendData) { index, friend ->
             TextWithRow(
-                friend.avatar,
-                "friend profile img",
-                50.dp,
-                "${friend.lastName}\n${friend.firstName}",
-                16.sp,
-                friend.email,
-                13.sp,
-                GreenMain,
-                8.dp,
-                10.dp,
+                painter = friend.avatar,
+                contentDescription = "friend profile img",
+                profileSize = 50.dp,
+                name = "${friend.lastName}\n${friend.firstName}",
+                nameSize = 16.sp,
+                description = friend.email,
+                descriptionSize = 13.sp,
+                descriptionColor = GreenMain,
+                rowVertical = 8.dp,
+                spacerWidth = 10.dp,
             )
         }
     }
