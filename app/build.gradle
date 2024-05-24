@@ -1,9 +1,12 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'org.jetbrains.kotlin.plugin.serialization' version '1.8.20'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.0'
     id 'kotlin-parcelize'
 }
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
     namespace 'com.sopt.now'
@@ -17,6 +20,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "AUTH_BASE_URL", properties["base.auth.url"]
+        buildConfigField "String", "USER_BASE_URL", properties["base.user.url"]
     }
 
     buildTypes {

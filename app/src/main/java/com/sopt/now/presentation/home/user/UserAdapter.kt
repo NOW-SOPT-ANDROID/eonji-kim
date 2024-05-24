@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.sopt.now.core.util.view.ItemDiffCallback
 import com.sopt.now.databinding.ItemUserBinding
-import com.sopt.now.presentation.model.User
 
 class UserAdapter() : ListAdapter<User, UserViewHolder>(UserAdapterDiffCallback) {
     override fun onCreateViewHolder(

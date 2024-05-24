@@ -1,34 +1,47 @@
 package com.sopt.now.presentation.login
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.core.MainApplication
 import com.sopt.now.core.util.view.UiState
-import com.sopt.now.presentation.model.User
+import com.sopt.now.data.ServicePool
+import com.sopt.now.data.dto.request.RequestLoginDto
 import com.sopt.now.presentation.util.KeyStorage.ERROR_LOGIN_ID_PW
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
-    private val _loginValid = MutableSharedFlow<UiState<User>>()
-    val loginValid: SharedFlow<UiState<User>> = _loginValid.asSharedFlow()
+    private val _postLogin = MutableLiveData<UiState<Any?>>(UiState.Loading)
+    val postLogin: MutableLiveData<UiState<Any?>> = _postLogin
 
-    fun checkLoginValid(id: String, pw: String) {
-        viewModelScope.launch {
-            val errorMessage = if (getLoginValid(id, pw)) null else ERROR_LOGIN_ID_PW
-            _loginValid.emit(errorMessage?.let { UiState.Failure(it) } ?: UiState.Success(getUserInfo()))
+    fun postLogin(id: String, pw: String) = viewModelScope.launch {
+        if (checkLoginValid(id, pw)) {
+            runCatching {
+                ServicePool.authServiceApi.postLogin(RequestLoginDto(id, pw))
+            }.fold(
+                {
+                    if (it.code() == 200) {
+                        _postLogin.value =
+                            UiState.Success("로그인 성공! 유저의 ID는 ${it.headers()["location"]} 입니둥")
+                                .apply { setUserMemberId(it.headers()["location"]?.toInt() ?: -1) }
+                    } else _postLogin.value =
+                        UiState.Failure("${it.errorBody()?.string()?.split("\"")?.get(5)}")
+
+                },
+                { _postLogin.value = UiState.Failure(it.message.toString()) }
+            )
+        } else {
+            _postLogin.value = UiState.Failure(ERROR_LOGIN_ID_PW)
         }
     }
 
-    private fun getLoginValid(id: String, pw: String) =
-        getLoginIdValid(id) && getLoginPwValid(pw) && getLoginIdEmpty(id) && getLoginPwEmpty(pw)
+    private fun checkLoginValid(id: String, pw: String) =
+        getLoginIdEmpty(id) && getLoginPwEmpty(pw)
 
-    private fun getLoginIdValid(id: String) = (id == getUserInfo().id)
-    private fun getLoginPwValid(pw: String) = (pw == getUserInfo().pw)
     private fun getLoginIdEmpty(id: String) = id.isNotBlank()
     private fun getLoginPwEmpty(pw: String) = pw.isNotBlank()
 
-    fun getUserInfo(): User = MainApplication.prefs.getUser()
+    private fun setUserMemberId(memberId: Int) {
+        MainApplication.prefs.setUser(memberId)
+    }
 }
