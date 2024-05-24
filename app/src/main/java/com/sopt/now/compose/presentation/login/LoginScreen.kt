@@ -74,7 +74,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
                     context.toast(it.data.toString())
                     Intent(context, HomeActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    }.let { context.startActivity(it) }
+                    }.let(context::startActivity)
                 }
 
                 is UiState.Failure -> {
