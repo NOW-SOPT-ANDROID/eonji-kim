@@ -1,6 +1,5 @@
 package com.sopt.now.presentation.sign
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.core.util.view.UiState
@@ -13,14 +12,18 @@ import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_PW
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_TEL
 import com.sopt.now.presentation.util.Regex.PW_REGEX
 import com.sopt.now.presentation.util.Regex.TEL_REGEX
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 class SignViewModel : ViewModel() {
-    private val _postSign = MutableLiveData<UiState<Any?>>(UiState.Loading)
-    val postSign: MutableLiveData<UiState<Any?>> = _postSign
+    private val _postSign = MutableSharedFlow<UiState<Any>>()
+    val postSign: SharedFlow<UiState<Any>> = _postSign
 
     fun postSign(user: User) = viewModelScope.launch {
+        _postSign.emit(UiState.Loading)
+
         if (checkSignValid(user) == null) {
             runCatching {
                 ServicePool.authServiceApi.postSign(
@@ -29,15 +32,15 @@ class SignViewModel : ViewModel() {
             }.fold(
                 {
                     if (it.code() == 201) {
-                        _postSign.value =
-                            UiState.Success("회원가입 성공! 유저의 ID는 ${it.headers()["location"]} 입니둥")
-                    } else _postSign.value =
+                        _postSign.emit(UiState.Success("회원가입 성공! 유저의 ID는 ${it.headers()["location"]} 입니둥"))
+                    } else _postSign.emit(
                         UiState.Failure("${it.errorBody()?.string()?.split("\"")?.get(5)}")
+                    )
                 },
-                { _postSign.value = UiState.Failure(it.message.toString()) }
+                { _postSign.emit(UiState.Failure(it.message.toString())) }
             )
         } else {
-            _postSign.value = UiState.Failure(checkSignValid(user).toString())
+            _postSign.emit(UiState.Failure(checkSignValid(user).toString()))
         }
     }
 

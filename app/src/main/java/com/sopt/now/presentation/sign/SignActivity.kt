@@ -2,6 +2,8 @@ package com.sopt.now.presentation.sign
 
 import android.content.Intent
 import androidx.activity.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.sopt.now.R
 import com.sopt.now.core.base.BindingActivity
 import com.sopt.now.core.util.context.snackBar
@@ -14,6 +16,8 @@ import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_ID
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_NICKNAME
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_PW
 import com.sopt.now.presentation.util.KeyStorage.ERROR_SIGN_TEL
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
 class SignActivity : BindingActivity<ActivitySignBinding>(R.layout.activity_sign) {
@@ -25,13 +29,13 @@ class SignActivity : BindingActivity<ActivitySignBinding>(R.layout.activity_sign
     }
 
     private fun initObserveSign() {
-        signViewModel.postSign.observe(this) {
+        signViewModel.postSign.flowWithLifecycle(lifecycle).onEach {
             when (it) {
                 is UiState.Success -> navigateToLogin(it.data.toString())
                 is UiState.Failure -> initErrorMessage(it.errorMessage)
                 is UiState.Loading -> Timber.d("로딩중")
             }
-        }
+        }.launchIn(lifecycleScope)
     }
 
     private fun initErrorMessage(errorMessage: String) {

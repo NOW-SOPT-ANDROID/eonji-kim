@@ -1,12 +1,13 @@
 package com.sopt.now.presentation.home
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.core.util.view.UiState
 import com.sopt.now.data.ServicePool
 import com.sopt.now.presentation.home.friend.Friend
 import com.sopt.now.presentation.home.user.User
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
@@ -19,8 +20,8 @@ class HomeViewModel : ViewModel() {
         )
     )
 
-    private val _getUserList = MutableLiveData<UiState<List<Friend>?>>(UiState.Loading)
-    val getUserList: MutableLiveData<UiState<List<Friend>?>> = _getUserList
+    private val _getUserList = MutableStateFlow<UiState<List<Friend>>>(UiState.Loading)
+    val getUserList: StateFlow<UiState<List<Friend>>> = _getUserList
 
     init {
         getUserList(2)
@@ -30,9 +31,7 @@ class HomeViewModel : ViewModel() {
         runCatching {
             ServicePool.userServiceApi.getUserList(page).body()?.data?.map { it.toFriend() }
         }.fold(
-            {
-                _getUserList.value = UiState.Success(it)
-            },
+            { _getUserList.value = UiState.Success(it ?: emptyList()) },
             { _getUserList.value = UiState.Failure(it.message.toString()) }
         )
     }

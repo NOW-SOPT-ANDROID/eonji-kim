@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.sopt.now.R
 import com.sopt.now.core.base.BindingActivity
 import com.sopt.now.core.util.context.snackBar
@@ -13,6 +15,8 @@ import com.sopt.now.databinding.ActivityLoginBinding
 import com.sopt.now.presentation.home.HomeActivity
 import com.sopt.now.presentation.sign.SignActivity
 import com.sopt.now.presentation.util.KeyStorage.ERROR_LOGIN_ID_PW
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
 class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
@@ -45,13 +49,13 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
     }
 
     private fun initObserveLogin() {
-        loginViewModel.postLogin.observe(this) {
+        loginViewModel.postLogin.flowWithLifecycle(lifecycle).onEach {
             when (it) {
                 is UiState.Success -> navigateToHome(it.data.toString())
                 is UiState.Failure -> initErrorMessage(it.errorMessage)
                 is UiState.Loading -> Timber.d("로딩중")
             }
-        }
+        }.launchIn(lifecycleScope)
     }
 
     private fun initErrorMessage(errorMessage: String) {

@@ -1,17 +1,22 @@
 package com.sopt.now.presentation.home
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sopt.now.R
 import com.sopt.now.core.base.BindingFragment
 import com.sopt.now.core.util.fragment.snackBar
+import com.sopt.now.core.util.fragment.viewLifeCycle
+import com.sopt.now.core.util.fragment.viewLifeCycleScope
 import com.sopt.now.core.util.view.UiState
 import com.sopt.now.databinding.FragmentHomeBinding
 import com.sopt.now.presentation.home.friend.Friend
 import com.sopt.now.presentation.home.friend.FriendAdapter
 import com.sopt.now.presentation.home.friend.FriendItemDecorator
 import com.sopt.now.presentation.home.user.UserAdapter
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
@@ -22,13 +27,13 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     }
 
     private fun initObserverUserList() {
-        homeViewModel.getUserList.observe(this) {
+        homeViewModel.getUserList.flowWithLifecycle(viewLifeCycle).onEach {
             when (it) {
                 is UiState.Success -> initHomeAdapter(it.data)
                 is UiState.Failure -> initErrorMessage(it.errorMessage)
                 is UiState.Loading -> Timber.d("로딩중")
             }
-        }
+        }.launchIn(viewLifeCycleScope)
     }
 
     private fun initErrorMessage(errorMessage: String) {

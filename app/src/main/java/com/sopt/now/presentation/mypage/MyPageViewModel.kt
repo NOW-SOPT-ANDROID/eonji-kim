@@ -10,12 +10,14 @@ import com.sopt.now.data.dto.request.RequestUserPwDto
 import com.sopt.now.data.dto.response.ResponseUserInfoDto
 import com.sopt.now.data.dto.response.ResponseUserPwDto
 import com.sopt.now.presentation.util.Regex.PW_REGEX
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 class MyPageViewModel : ViewModel() {
-    private val _getUserInfo = MutableLiveData<UiState<ResponseUserInfoDto>>(UiState.Loading)
-    val getUserInfo: MutableLiveData<UiState<ResponseUserInfoDto>> = _getUserInfo
+    private val _getUserInfo = MutableStateFlow<UiState<ResponseUserInfoDto>>(UiState.Loading)
+    val getUserInfo: StateFlow<UiState<ResponseUserInfoDto>> = _getUserInfo
 
     private val _patchUserPw = MutableLiveData<UiState<ResponseUserPwDto>>(UiState.Loading)
     val patchUserPw: MutableLiveData<UiState<ResponseUserPwDto>> = _patchUserPw

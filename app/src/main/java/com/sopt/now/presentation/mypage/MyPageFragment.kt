@@ -2,13 +2,18 @@ package com.sopt.now.presentation.mypage
 
 import android.graphics.Paint
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import com.sopt.now.R
 import com.sopt.now.core.base.BindingFragment
 import com.sopt.now.core.util.fragment.snackBar
+import com.sopt.now.core.util.fragment.viewLifeCycle
+import com.sopt.now.core.util.fragment.viewLifeCycleScope
 import com.sopt.now.core.util.view.UiState
 import com.sopt.now.data.dto.response.ResponseUserInfoDataDto
 import com.sopt.now.databinding.FragmentMyPageBinding
 import com.sopt.now.presentation.util.DialogTag.CHANGE_PW
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
 class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
@@ -25,13 +30,13 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(R.layout.fragment_
     }
 
     private fun initObserveUserInfo() {
-        myPageViewModel.getUserInfo.observe(this) {
+        myPageViewModel.getUserInfo.flowWithLifecycle(viewLifeCycle).onEach {
             when (it) {
                 is UiState.Success -> initResultLoginUserInformation(it.data.data)
                 is UiState.Failure -> initErrorMessage(it.errorMessage)
                 is UiState.Loading -> Timber.d("로딩중")
             }
-        }
+        }.launchIn(viewLifeCycleScope)
     }
 
     private fun initErrorMessage(errorMessage: String) {
