@@ -1,6 +1,5 @@
 package com.sopt.now.domain.repository
 
-import com.sopt.now.domain.entity.UserEntity
 import com.sopt.now.domain.entity.UserInfoEntity
 import kotlinx.coroutines.flow.Flow
 
