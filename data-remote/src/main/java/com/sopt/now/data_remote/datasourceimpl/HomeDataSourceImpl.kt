@@ -10,7 +10,7 @@ import javax.inject.Inject
 class HomeDataSourceImpl @Inject
 constructor(
     private val authApiService: AuthApiService
-): HomeDataSource {
+) : HomeDataSource {
     override suspend fun getUserInfo(memberId: Int): ResponseUserInfoDto =
         authApiService.getUserInfo(memberId)
 
