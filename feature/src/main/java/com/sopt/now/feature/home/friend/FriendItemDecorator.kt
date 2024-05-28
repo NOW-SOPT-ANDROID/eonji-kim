@@ -1,10 +1,10 @@
-package com.sopt.now.presentation.home.friend
+package com.sopt.now.feature.home.friend
 
 import android.content.Context
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.sopt.now.core.util.context.pxToDp
+import com.sopt.now.core_ui.util.context.pxToDp
 
 class FriendItemDecorator(private val context: Context) : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(

@@ -1,10 +1,10 @@
-package com.sopt.now.presentation.home.user
+package com.sopt.now.feature.home.user
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.sopt.now.core.util.view.ItemDiffCallback
-import com.sopt.now.databinding.ItemUserBinding
+import com.sopt.now.core_ui.view.ItemDiffCallback
+import com.sopt.now.feature.databinding.ItemUserBinding
 
 class UserAdapter() : ListAdapter<User, UserViewHolder>(UserAdapterDiffCallback) {
     override fun onCreateViewHolder(

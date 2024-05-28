@@ -1,4 +1,4 @@
-package com.sopt.now.presentation.login
+package com.sopt.now.feature.login
 
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
@@ -6,19 +6,21 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.sopt.now.R
-import com.sopt.now.core.base.BindingActivity
-import com.sopt.now.core.util.context.snackBar
-import com.sopt.now.core.util.context.toast
-import com.sopt.now.core.util.view.UiState
-import com.sopt.now.databinding.ActivityLoginBinding
-import com.sopt.now.presentation.home.HomeActivity
-import com.sopt.now.presentation.sign.SignActivity
-import com.sopt.now.presentation.util.KeyStorage.ERROR_LOGIN_ID_PW
+import com.sopt.now.core_ui.base.BindingActivity
+import com.sopt.now.core_ui.util.context.snackBar
+import com.sopt.now.core_ui.util.context.toast
+import com.sopt.now.core_ui.view.UiState
+import com.sopt.now.feature.KeyStorage.ERROR_LOGIN_ID_PW
+import com.sopt.now.feature.R
+import com.sopt.now.feature.databinding.ActivityLoginBinding
+import com.sopt.now.feature.home.HomeActivity
+import com.sopt.now.feature.sign.SignActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
+@AndroidEntryPoint
 class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
     private val loginViewModel by viewModels<LoginViewModel>()
     private lateinit var getResult: ActivityResultLauncher<Intent>
@@ -51,9 +53,10 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
     private fun initObserveLogin() {
         loginViewModel.postLogin.flowWithLifecycle(lifecycle).onEach {
             when (it) {
-                is UiState.Success -> navigateToHome(it.data.toString())
+                is UiState.Success -> navigateToHome(it.data)
                 is UiState.Failure -> initErrorMessage(it.errorMessage)
                 is UiState.Loading -> Timber.d("로딩중")
+                is UiState.Empty -> Timber.d("empty")
             }
         }.launchIn(lifecycleScope)
     }
@@ -65,8 +68,8 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         }
     }
 
-    private fun navigateToHome(message: String) {
-        toast(message)
+    private fun navigateToHome(userId: Int) {
+        toast("로그인에 성공했습니다! userID는 $userId")
         Intent(this@LoginActivity, HomeActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }.let { startActivity(it) }

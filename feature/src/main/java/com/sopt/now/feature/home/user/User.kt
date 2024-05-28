@@ -1,4 +1,4 @@
-package com.sopt.now.presentation.home.user
+package com.sopt.now.feature.home.user
 
 data class User(
     val id: String,

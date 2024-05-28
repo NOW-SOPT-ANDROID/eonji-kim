@@ -1,14 +1,16 @@
-package com.sopt.now.presentation.home
+package com.sopt.now.feature.home
 
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import com.sopt.now.R
-import com.sopt.now.core.base.BindingActivity
-import com.sopt.now.core.util.context.toast
-import com.sopt.now.databinding.ActivityHomeBinding
-import com.sopt.now.presentation.mypage.MyPageFragment
-import com.sopt.now.presentation.search.SearchFragment
+import com.sopt.now.core_ui.base.BindingActivity
+import com.sopt.now.core_ui.util.context.toast
+import com.sopt.now.feature.R
+import com.sopt.now.feature.databinding.ActivityHomeBinding
+import com.sopt.now.feature.mypage.MyPageFragment
+import com.sopt.now.feature.search.SearchFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private var backPressedTime = 0L
 

@@ -1,7 +1,7 @@
-package com.sopt.now.presentation.home.user
+package com.sopt.now.feature.home.user
 
 import androidx.recyclerview.widget.RecyclerView
-import com.sopt.now.databinding.ItemUserBinding
+import com.sopt.now.feature.databinding.ItemUserBinding
 
 class UserViewHolder(private val binding: ItemUserBinding) :
     RecyclerView.ViewHolder(binding.root) {

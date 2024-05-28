@@ -1,12 +1,13 @@
-package com.sopt.now.presentation.home.friend
+package com.sopt.now.feature.home.friend
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.sopt.now.core.util.view.ItemDiffCallback
-import com.sopt.now.databinding.ItemFriendBinding
+import com.sopt.now.core_ui.view.ItemDiffCallback
+import com.sopt.now.domain.entity.FriendEntity
+import com.sopt.now.feature.databinding.ItemFriendBinding
 
-class FriendAdapter() : ListAdapter<Friend, FriendViewHolder>(FriendAdapterDiffCallback) {
+class FriendAdapter() : ListAdapter<FriendEntity, FriendViewHolder>(FriendAdapterDiffCallback) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -25,7 +26,7 @@ class FriendAdapter() : ListAdapter<Friend, FriendViewHolder>(FriendAdapterDiffC
 
     companion object {
         private val FriendAdapterDiffCallback =
-            ItemDiffCallback<Friend>(
+            ItemDiffCallback<FriendEntity>(
                 onItemsTheSame = { old, new -> old.id == new.id },
                 onContentsTheSame = { old, new -> old == new }
             )
