@@ -1,4 +1,4 @@
-package com.sopt.now.core.base
+package com.sopt.now.core_ui.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
