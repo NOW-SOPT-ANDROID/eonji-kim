@@ -1,10 +1,9 @@
-package com.sopt.now.presentation
+package com.sopt.now.feature
 
 import android.content.Intent
-import com.sopt.now.R
-import com.sopt.now.core.base.BindingActivity
-import com.sopt.now.databinding.ActivityMainBinding
-import com.sopt.now.presentation.login.LoginActivity
+import com.sopt.now.core_ui.base.BindingActivity
+import com.sopt.now.feature.databinding.ActivityMainBinding
+import com.sopt.now.feature.login.LoginActivity
 
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun initView() {
