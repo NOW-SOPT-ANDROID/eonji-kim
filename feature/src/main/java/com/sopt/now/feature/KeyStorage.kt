@@ -1,7 +1,6 @@
-package com.sopt.now.presentation.util
+package com.sopt.now.feature
 
 object KeyStorage {
-    const val MEMBER_ID = "member_id"
     const val ERROR_LOGIN_ID_PW = "error_login_id_pw"
     const val ERROR_SIGN_ID = "error_sign_id"
     const val ERROR_SIGN_PW = "error_sign_pw"
