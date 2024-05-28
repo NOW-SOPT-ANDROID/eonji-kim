@@ -1,4 +1,4 @@
-package com.sopt.now.core.util.view
+package com.sopt.now.core_ui.view
 
 import androidx.recyclerview.widget.DiffUtil
 
