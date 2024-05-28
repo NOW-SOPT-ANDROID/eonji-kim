@@ -2,15 +2,12 @@ package com.sopt.now.di
 
 import com.sopt.now.data.datasource.HomeDataSource
 import com.sopt.now.data.repositoryimpl.HomeRepositoryImpl
-import com.sopt.now.data_remote.api.AuthApiService
 import com.sopt.now.data_remote.datasourceimpl.HomeDataSourceImpl
 import com.sopt.now.domain.repository.HomeRepository
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
