@@ -1,9 +1,9 @@
 package com.sopt.now.data_local.datasourceimpl
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.sopt.now.data.datasource.SharedPreferenceDataSource
 import javax.inject.Inject
-import androidx.core.content.edit
 
 class SharedPreferencesDataSourceImpl @Inject constructor(
     private val sharedPreferences: SharedPreferences,
