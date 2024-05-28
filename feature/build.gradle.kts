@@ -40,32 +40,31 @@ dependencies {
     implementation(project(":core-ui"))
     implementation(project(":domain"))
 
-    // jetpack navi
-    implementation(libs.bundles.jetpack.navi)
-
-    // google
+    // Google
     implementation(libs.material)
 
-    // ktx (by viewModels)
+    // Ktx (by viewModels)
     implementation(libs.activity.ktx)
     implementation(libs.fragment.ktx)
 
-    // 기초 androidx 라이브러리 ("core-ktx", "constraintlayout", "appcompat", "activity")
+    // 기초 AndroidX ("core-ktx", "constraintlayout", "appcompat", "activity")
     implementation(libs.bundles.androidx)
 
-    implementation(libs.timber)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.bundles.androidx.android.test)
-
-    implementation(libs.inject)
-
-    // dagger hilt
+    // Dagger hilt
     implementation(libs.dagger.hilt)
     kapt(libs.dagger.hilt.compiler)
+    implementation(libs.inject)
 
-    implementation(libs.glide)
+    // Third-Party
+    implementation(libs.timber)
     implementation(libs.coil.core)
-
+    implementation(libs.glide)
     implementation("androidx.recyclerview:recyclerview:1.2.0")
+
+    // Jetpack navi
+    implementation(libs.bundles.jetpack.navi)
+
+    // Test
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.bundles.androidx.android.test)
 }

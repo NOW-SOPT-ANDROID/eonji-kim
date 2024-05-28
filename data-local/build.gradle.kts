@@ -27,6 +27,13 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
 
-    implementation(libs.inject)
+    // 기초 AndroidX
     implementation(libs.core.ktx)
+
+    // Dagger hilt
+    implementation(libs.inject)
+
+    // Test
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.bundles.androidx.android.test)
 }

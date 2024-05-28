@@ -24,9 +24,14 @@ android {
 }
 
 dependencies {
+    // 기초 AndroidX
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
+
+    // Google
     implementation(libs.material)
+
+    // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.bundles.androidx.android.test)
 }

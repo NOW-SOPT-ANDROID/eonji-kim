@@ -27,14 +27,20 @@ android {
 dependencies {
     implementation(project(":domain"))
 
-    // json
+    // Json
     implementation(libs.kotlinx.serialization.json)
 
+    // Third-Party
     implementation(libs.retrofit2)
     implementation(libs.retrofit.kotlin.serialization.converter)
     implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
 
+    // Dagger hilt
     implementation(libs.inject)
+
+    // Test
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.bundles.androidx.android.test)
 }

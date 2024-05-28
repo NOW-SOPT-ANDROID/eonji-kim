@@ -9,5 +9,9 @@ java {
 }
 
 dependencies {
+    // Third-Party
     implementation(libs.kotlin.coroutines)
+
+    // Test
+    testImplementation(libs.junit)
 }

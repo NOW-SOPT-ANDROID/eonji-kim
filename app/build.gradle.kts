@@ -58,10 +58,11 @@ dependencies {
     implementation(project(":data-local"))
     implementation(project(":data-remote"))
 
-
-    // 기초 androidx 라이브러리 ("core-ktx", "constraintlayout", "appcompat", "activity")
+    // 기초 AndroidX 라이브러리 ("core-ktx", "constraintlayout", "appcompat", "activity")
     implementation(libs.bundles.androidx)
-    // json
+    implementation(libs.security.crypto)
+
+    // Json
     implementation(libs.kotlinx.serialization.json)
 
     // Third Party
@@ -74,11 +75,13 @@ dependencies {
     implementation(libs.coil.core)
     implementation(libs.timber)
 
-    // dagger hilt
+    // Dagger hilt
     implementation(libs.dagger.hilt)
     kapt(libs.dagger.hilt.compiler)
 
-    implementation(libs.security.crypto)
+    // Test
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.bundles.androidx.android.test)
 }
 
 fun getApiKey(propertyKey: String): String {

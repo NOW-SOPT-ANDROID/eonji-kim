@@ -27,11 +27,17 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
 
+    // Third-Party
     implementation(libs.retrofit2)
     implementation(libs.retrofit.kotlin.serialization.converter)
     implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
 
+    // Dagger hilt
     implementation(libs.inject)
+
+    // Test
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.bundles.androidx.android.test)
 }
