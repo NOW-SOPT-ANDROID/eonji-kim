@@ -1,4 +1,4 @@
-package com.sopt.now.core.util.fragment
+package com.sopt.now.core_ui.util.fragment
 
 import android.view.View
 import android.widget.Toast
@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
-import com.sopt.now.core.util.context.statusBarColorOf
+import com.sopt.now.core_ui.util.context.statusBarColorOf
 
 fun Fragment.toast(message: String) {
     Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
