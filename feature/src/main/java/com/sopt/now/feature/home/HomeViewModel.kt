@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.core_ui.view.UiState
 import com.sopt.now.domain.entity.FriendEntity
+import com.sopt.now.domain.entity.UserEntity
 import com.sopt.now.domain.repository.ReqresRepository
-import com.sopt.now.feature.home.user.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +19,7 @@ constructor(
     private val reqresRepository: ReqresRepository,
 ) : ViewModel() {
     val mockUserList = listOf(
-        User(
+        UserEntity(
             id = "test",
             pw = "test",
             nickname = "기먼지",
