@@ -15,7 +15,6 @@ import com.sopt.now.feature.KeyStorage.ERROR_SIGN_PW
 import com.sopt.now.feature.KeyStorage.ERROR_SIGN_TEL
 import com.sopt.now.feature.R
 import com.sopt.now.feature.databinding.ActivitySignBinding
-import com.sopt.now.feature.home.user.User
 import com.sopt.now.feature.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn

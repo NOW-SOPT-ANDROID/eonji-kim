@@ -3,7 +3,6 @@ package com.sopt.now.feature.mypage
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.core_ui.view.UiState
-import com.sopt.now.domain.entity.UserEntity
 import com.sopt.now.domain.entity.UserInfoEntity
 import com.sopt.now.domain.repository.AuthRepository
 import com.sopt.now.domain.repository.HomeRepository
@@ -37,7 +36,8 @@ constructor(
     private fun getUserInfo() = viewModelScope.launch {
         getUserMemberId()?.let { memberId ->
             homeRepository.getUserInfo(memberId).collectLatest {
-                if (it != null) _getUserInfo.value = UiState.Success(it) else UiState.Failure("null")
+                if (it != null) _getUserInfo.value =
+                    UiState.Success(it) else UiState.Failure("null")
             }
         }
         _getUserInfo.value = UiState.Loading

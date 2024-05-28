@@ -26,7 +26,9 @@ constructor(
         if (checkLoginValid(id, pw)) {
             authRepository.postLogin(id, pw).collectLatest {
                 if (it != null) _postLogin.emit(
-                    UiState.Success(it).apply { setUserMemberId(it.toInt()) }) else UiState.Failure("null")
+                    UiState.Success(it).apply { setUserMemberId(it.toInt()) }) else UiState.Failure(
+                    "null"
+                )
             }
         } else {
             _postLogin.emit(UiState.Failure(ERROR_LOGIN_ID_PW))

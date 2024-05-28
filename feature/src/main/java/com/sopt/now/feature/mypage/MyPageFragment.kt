@@ -8,7 +8,6 @@ import com.sopt.now.core_ui.util.fragment.snackBar
 import com.sopt.now.core_ui.util.fragment.viewLifeCycle
 import com.sopt.now.core_ui.util.fragment.viewLifeCycleScope
 import com.sopt.now.core_ui.view.UiState
-import com.sopt.now.domain.entity.UserEntity
 import com.sopt.now.domain.entity.UserInfoEntity
 import com.sopt.now.feature.DialogTag.CHANGE_PW
 import com.sopt.now.feature.R

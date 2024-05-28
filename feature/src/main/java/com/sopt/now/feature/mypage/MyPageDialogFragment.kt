@@ -36,6 +36,7 @@ class MyPageDialogFragment() :
                     snackBar(binding.root) { "비밀번호 변경 완료 : ${it.data}" }
                     dismiss()
                 }
+
                 is UiState.Failure -> snackBar(binding.root) { it.errorMessage }
                 is UiState.Loading -> Timber.d("로딩중")
                 is UiState.Empty -> Timber.d("empty")
