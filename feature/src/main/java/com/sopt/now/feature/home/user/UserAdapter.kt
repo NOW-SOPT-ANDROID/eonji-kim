@@ -4,9 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.sopt.now.core_ui.view.ItemDiffCallback
+import com.sopt.now.domain.entity.UserEntity
 import com.sopt.now.feature.databinding.ItemUserBinding
 
-class UserAdapter() : ListAdapter<User, UserViewHolder>(UserAdapterDiffCallback) {
+class UserAdapter() : ListAdapter<UserEntity, UserViewHolder>(UserAdapterDiffCallback) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -25,7 +26,7 @@ class UserAdapter() : ListAdapter<User, UserViewHolder>(UserAdapterDiffCallback)
 
     companion object {
         private val UserAdapterDiffCallback =
-            ItemDiffCallback<User>(
+            ItemDiffCallback<UserEntity>(
                 onItemsTheSame = { old, new -> old.id == new.id },
                 onContentsTheSame = { old, new -> old == new }
             )
