@@ -1,6 +1,6 @@
-package com.sopt.now.data
+package com.sopt.now.data_remote
 
-object KeyStorage {
+object ApiKeyStorage {
     const val MEMBER = "member"
     const val JOIN = "join"
     const val LOGIN = "login"
