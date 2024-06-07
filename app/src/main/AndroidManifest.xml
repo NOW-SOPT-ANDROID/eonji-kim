@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".util.MainApplication"
+        android:name=".MainApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".feature.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.NOWSOPTAndroid">
             <intent-filter>
@@ -27,13 +27,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.sign.SignActivity"
+            android:name=".feature.sign.SignActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.login.LoginActivity"
+            android:name=".feature.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.home.HomeActivity"
+            android:name=".feature.home.HomeActivity"
             android:exported="false" />
     </application>
 
