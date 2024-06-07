@@ -28,12 +28,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.textfield.TextFieldWithTitle
@@ -46,6 +49,8 @@ import com.sopt.now.compose.ui.theme.YellowMain
 import com.sopt.now.compose.util.KeyStorage.ERROR_LOGIN_ID_PW
 import com.sopt.now.compose.util.UiState
 import com.sopt.now.compose.util.toast
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
 @Composable
@@ -67,8 +72,8 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
             }
         }
 
-    LaunchedEffect(loginViewModel.postLogin, lifecycleOwner) {
-        loginViewModel.postLogin.observe(lifecycleOwner) {
+    LaunchedEffect(loginViewModel.loginUiState, lifecycleOwner) {
+        loginViewModel.loginUiState.flowWithLifecycle(lifecycleOwner.lifecycle).onEach {
             when (it) {
                 is UiState.Success -> {
                     context.toast(it.data.toString())
@@ -86,7 +91,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
 
                 is UiState.Loading -> Timber.d("로딩중")
             }
-        }
+        }.launchIn(lifecycleOwner.lifecycleScope)
     }
 
     Column(
@@ -98,18 +103,23 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
     ) {
         // Title
         Text(
-            "Welcome to SOPT",
+            stringResource(id = R.string.text_login_title),
             fontSize = 30.sp,
             modifier = Modifier.padding(top = 50.dp, bottom = 100.dp)
         )
 
         // Id
-        TextFieldWithTitle("ID", id, { newId -> id = newId }, "아이디를 입력해주세요")
+        TextFieldWithTitle(
+            stringResource(id = R.string.tf_login_id_title),
+            id,
+            { newId -> id = newId },
+            stringResource(id = R.string.tf_login_id_label)
+        )
         // Pw
-        TextFieldWithTitle("비밀번호",
+        TextFieldWithTitle(stringResource(id = R.string.tf_login_pw_title),
             pw,
             { newPw -> pw = newPw },
-            "비밀번호를 입력해주세요",
+            stringResource(id = R.string.tf_login_pw_label),
             KeyboardType.Password,
             if (pwVisibility) VisualTransformation.None else PasswordVisualTransformation(),
             {
@@ -133,7 +143,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
             colors = ButtonDefaults.buttonColors(containerColor = YellowMain),
             shape = RoundedCornerShape(15.dp)
         ) {
-            Text("로그인 하기", color = White, fontSize = 17.sp)
+            Text(stringResource(id = R.string.btn_login_login), color = White, fontSize = 17.sp)
         }
         // SignBtn
         Button(
@@ -145,7 +155,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
             colors = ButtonDefaults.buttonColors(containerColor = GreenMain),
             shape = RoundedCornerShape(15.dp)
         ) {
-            Text("회원가입 하기", color = White, fontSize = 17.sp)
+            Text(stringResource(id = R.string.btn_login_sign), color = White, fontSize = 17.sp)
         }
     }
 }

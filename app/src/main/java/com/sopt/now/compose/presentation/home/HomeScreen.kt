@@ -15,6 +15,8 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.text.TextWithRow
@@ -25,6 +27,8 @@ import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import com.sopt.now.compose.ui.theme.YellowMain
 import com.sopt.now.compose.util.UiState
 import com.sopt.now.compose.util.toast
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
 @Composable
@@ -36,8 +40,8 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
     var userData by remember { mutableStateOf(emptyList<User>()) }
     var friendData by remember { mutableStateOf(emptyList<Friend>()) }
 
-    LaunchedEffect(homeViewModel.getUserList, lifecycleOwner) {
-        homeViewModel.getUserList.observe(lifecycleOwner) {
+    LaunchedEffect(homeViewModel.friendUiState, lifecycleOwner) {
+        homeViewModel.friendUiState.flowWithLifecycle(lifecycleOwner.lifecycle).onEach {
             when (it) {
                 is UiState.Success -> {
                     userData = homeViewModel.mockUserList
@@ -47,7 +51,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
                 is UiState.Failure -> context.toast("유저 리스트 조회 실패 : ${it.errorMessage}")
                 is UiState.Loading -> Timber.d("로딩중")
             }
-        }
+        }.launchIn(lifecycleOwner.lifecycleScope)
     }
 
     LazyColumn(

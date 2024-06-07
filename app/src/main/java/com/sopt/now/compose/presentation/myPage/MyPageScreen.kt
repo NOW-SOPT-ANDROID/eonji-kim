@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -48,8 +49,8 @@ fun MyPageScreen(myPageViewModel: MyPageViewModel = viewModel()) {
     var userNickname by remember { mutableStateOf("") }
     var userTel by remember { mutableStateOf("") }
 
-    LaunchedEffect(myPageViewModel.getUserInfo, lifecycleOwner) {
-        myPageViewModel.getUserInfo.observe(lifecycleOwner) {
+    LaunchedEffect(myPageViewModel.userInfoUiState, lifecycleOwner) {
+        myPageViewModel.userInfoUiState.flowWithLifecycle(lifecycleOwner.lifecycle).onEach {
             when (it) {
                 is UiState.Success -> {
                     with(it.data.data) {
@@ -68,7 +69,7 @@ fun MyPageScreen(myPageViewModel: MyPageViewModel = viewModel()) {
 
                 is UiState.Loading -> Timber.d("로딩중")
             }
-        }
+        }.launchIn(lifecycleOwner.lifecycleScope)
     }
 
     Column(
@@ -94,11 +95,11 @@ fun MyPageScreen(myPageViewModel: MyPageViewModel = viewModel()) {
             modifier = Modifier.padding(top = 10.dp, bottom = 25.dp)
         )
         // memberId
-        TextWithTitle("Member ID", memberId, 40.dp)
+        TextWithTitle(stringResource(id = R.string.text_my_page_member_id_title), memberId, 40.dp)
         // Id
-        TextWithTitle("ID", userId, 40.dp)
+        TextWithTitle(stringResource(id = R.string.tf_login_id_title), userId, 40.dp)
         // Tel
-        TextWithTitle("전화번호", userTel)
+        TextWithTitle(stringResource(id = R.string.tf_sign_tel_title), userTel)
     }
 }
 

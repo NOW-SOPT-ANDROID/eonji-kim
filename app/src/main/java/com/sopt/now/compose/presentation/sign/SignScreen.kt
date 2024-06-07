@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -34,6 +35,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.R
 import com.sopt.now.compose.component.textfield.TextFieldWithTitle
@@ -48,6 +51,8 @@ import com.sopt.now.compose.util.KeyStorage.ERROR_SIGN_PW
 import com.sopt.now.compose.util.KeyStorage.ERROR_SIGN_TEL
 import com.sopt.now.compose.util.UiState
 import com.sopt.now.compose.util.toast
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
 @Composable
@@ -64,8 +69,8 @@ fun SignScreen(signViewModel: SignViewModel = viewModel()) {
     val pwIcon =
         painterResource(id = if (pwVisibility) R.drawable.ic_pw_visible else R.drawable.ic_pw_invisible)
 
-    LaunchedEffect(signViewModel.postSign, lifecycleOwner) {
-        signViewModel.postSign.observe(lifecycleOwner) {
+    LaunchedEffect(signViewModel.signUiState, lifecycleOwner) {
+        signViewModel.signUiState.flowWithLifecycle(lifecycleOwner.lifecycle).onEach {
             when (it) {
                 is UiState.Success -> {
                     context.toast(it.data.toString())
@@ -88,7 +93,7 @@ fun SignScreen(signViewModel: SignViewModel = viewModel()) {
 
                 is UiState.Loading -> Timber.d("로딩중")
             }
-        }
+        }.launchIn(lifecycleOwner.lifecycleScope)
     }
 
     Column(
@@ -100,23 +105,23 @@ fun SignScreen(signViewModel: SignViewModel = viewModel()) {
     ) {
         // Title
         Text(
-            "SIGN UP",
+            stringResource(id = R.string.text_sign_titlte),
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(top = 50.dp, bottom = 40.dp)
         )
 
         // Id
-        TextFieldWithTitle("ID", id, { newId ->
+        TextFieldWithTitle(stringResource(id = R.string.tf_login_id_title), id, { newId ->
             id = newId
-        }, "아이디를 입력해주세요")
+        }, stringResource(id = R.string.tf_login_id_label))
         // Pw
-        TextFieldWithTitle("비밀번호",
+        TextFieldWithTitle(stringResource(id = R.string.tf_login_pw_title),
             pw,
             { newPw ->
                 pw = newPw
             },
-            "비밀번호를 입력해주세요",
+            stringResource(id = R.string.tf_login_pw_label),
             KeyboardType.Password,
             if (pwVisibility) VisualTransformation.None else PasswordVisualTransformation(),
             {
@@ -128,13 +133,18 @@ fun SignScreen(signViewModel: SignViewModel = viewModel()) {
                 }
             })
         // Nickname
-        TextFieldWithTitle("닉네임", nickname, { newNickname ->
-            nickname = newNickname
-        }, "닉네임을 입력해주세요")
+        TextFieldWithTitle(
+            stringResource(id = R.string.tf_sign_nickname_title),
+            nickname,
+            { newNickname ->
+                nickname = newNickname
+            },
+            stringResource(id = R.string.tf_sign_nickname_label)
+        )
         // Tel
-        TextFieldWithTitle("전화번호", tel, { newAge ->
+        TextFieldWithTitle(stringResource(id = R.string.tf_sign_tel_title), tel, { newAge ->
             tel = newAge
-        }, "전화번호를 입력해주세요")
+        }, stringResource(id = R.string.tf_sign_tel_label))
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -148,7 +158,7 @@ fun SignScreen(signViewModel: SignViewModel = viewModel()) {
             colors = ButtonDefaults.buttonColors(containerColor = GreenMain),
             shape = RoundedCornerShape(15.dp)
         ) {
-            Text("회원가입 하기", color = White, fontSize = 17.sp)
+            Text(stringResource(id = R.string.btn_login_sign), color = White, fontSize = 17.sp)
         }
     }
 }

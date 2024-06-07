@@ -1,5 +1,6 @@
 package com.sopt.now.compose.presentation.home
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,6 +8,8 @@ import com.sopt.now.compose.data.ServicePool
 import com.sopt.now.compose.model.Friend
 import com.sopt.now.compose.model.User
 import com.sopt.now.compose.util.UiState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
@@ -19,8 +22,8 @@ class HomeViewModel : ViewModel() {
         )
     )
 
-    private val _getUserList = MutableLiveData<UiState<List<Friend>?>>(UiState.Loading)
-    val getUserList: MutableLiveData<UiState<List<Friend>?>> = _getUserList
+    private val _friendUiState = MutableStateFlow<UiState<List<Friend>>>(UiState.Loading)
+    val friendUiState: StateFlow<UiState<List<Friend>>> = _friendUiState
 
     init {
         getUserList(2)
@@ -31,9 +34,9 @@ class HomeViewModel : ViewModel() {
             ServicePool.userServiceApi.getUserList(page).body()?.data?.map { it.toFriend() }
         }.fold(
             {
-                _getUserList.value = UiState.Success(it)
+                _friendUiState.value = UiState.Success(it ?: emptyList())
             },
-            { _getUserList.value = UiState.Failure(it.message.toString()) }
+            { _friendUiState.value = UiState.Failure(it.message.toString()) }
         )
     }
 }
