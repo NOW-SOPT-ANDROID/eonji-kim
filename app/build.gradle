@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.0'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 Properties properties = new Properties()
@@ -92,4 +94,11 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
+
+    // Dagger hilt
+    implementation("javax.inject:javax.inject:1")
+    implementation "com.google.dagger:hilt-android:2.50"
+    kapt "com.google.dagger:hilt-android-compiler:2.50"
+
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 }
