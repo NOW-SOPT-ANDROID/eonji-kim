@@ -1,6 +1,6 @@
 package com.sopt.now.compose.data.dto.response
 
-import com.sopt.now.compose.model.Friend
+import com.sopt.now.compose.domain.entity.FriendEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -33,7 +33,7 @@ data class ResponseUserListDataDto(
     @SerialName("avatar")
     val avatar: String = "",
 ) {
-    fun toFriend() = Friend(
+    fun toFriendEntity() = FriendEntity(
         id,
         email,
         firstName,
