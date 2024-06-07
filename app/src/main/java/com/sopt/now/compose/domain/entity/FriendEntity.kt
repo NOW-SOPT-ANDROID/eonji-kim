@@ -1,6 +1,6 @@
-package com.sopt.now.compose.model
+package com.sopt.now.compose.domain.entity
 
-data class Friend(
+data class FriendEntity(
     val id: Int,
     val email: String,
     val firstName: String,

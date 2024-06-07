@@ -1,4 +1,4 @@
-package com.sopt.now.compose.model
+package com.sopt.now.compose.domain.entity
 
 import androidx.compose.ui.graphics.vector.ImageVector
 
