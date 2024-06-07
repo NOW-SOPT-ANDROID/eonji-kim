@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ResponseSignDto(
     @SerialName("code")
-    val code: Int,
+    val code: Int = -1,
     @SerialName("message")
-    val message: String,
+    val message: String = "",
 )
