@@ -1,4 +1,4 @@
-package com.sopt.now.compose.util
+package com.sopt.now.compose.core_ui.view
 
 sealed interface UiState<out T> {
     data object Loading : UiState<Nothing>

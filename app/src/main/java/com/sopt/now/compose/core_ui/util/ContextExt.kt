@@ -1,4 +1,4 @@
-package com.sopt.now.compose.util
+package com.sopt.now.compose.core_ui.util
 
 import android.app.Activity
 import android.content.Context
