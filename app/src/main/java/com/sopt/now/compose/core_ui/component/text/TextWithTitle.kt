@@ -1,4 +1,4 @@
-package com.sopt.now.compose.component.text
+package com.sopt.now.compose.core_ui.component.text
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,8 +10,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sopt.now.compose.ui.theme.Grey600
-import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
+import com.sopt.now.compose.core_ui.theme.Grey600
+import com.sopt.now.compose.core_ui.theme.NOWSOPTAndroidTheme
 
 @Composable
 fun TextWithTitle(

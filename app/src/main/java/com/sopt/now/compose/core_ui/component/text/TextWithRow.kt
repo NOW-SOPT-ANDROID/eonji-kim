@@ -1,4 +1,4 @@
-package com.sopt.now.compose.component.text
+package com.sopt.now.compose.core_ui.component.text
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.sopt.now.compose.R
-import com.sopt.now.compose.ui.theme.GreenMain
-import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
+import com.sopt.now.compose.core_ui.theme.GreenMain
+import com.sopt.now.compose.core_ui.theme.NOWSOPTAndroidTheme
 
 @Composable
 fun TextWithRow(
