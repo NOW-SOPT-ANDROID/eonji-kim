@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ResponseUserInfoDto(
     @SerialName("code")
-    val code: Int,
+    val code: Int = -1,
     @SerialName("message")
-    val message: String,
+    val message: String = "",
     @SerialName("data")
     val data: ResponseUserInfoDataDto,
 )
@@ -16,9 +16,9 @@ data class ResponseUserInfoDto(
 @Serializable
 data class ResponseUserInfoDataDto(
     @SerialName("authenticationId")
-    val authenticationId: String,
+    val authenticationId: String = "",
     @SerialName("nickname")
-    val nickname: String,
+    val nickname: String = "",
     @SerialName("phone")
-    val phone: String,
+    val phone: String = "",
 )
