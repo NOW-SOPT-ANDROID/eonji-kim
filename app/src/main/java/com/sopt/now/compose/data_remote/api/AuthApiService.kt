@@ -1,10 +1,10 @@
-package com.sopt.now.compose.data.api
+package com.sopt.now.compose.data_remote.api
 
-import com.sopt.now.compose.data.KeyStorage.INFO
-import com.sopt.now.compose.data.KeyStorage.JOIN
-import com.sopt.now.compose.data.KeyStorage.LOGIN
-import com.sopt.now.compose.data.KeyStorage.MEMBER
-import com.sopt.now.compose.data.KeyStorage.MEMBER_ID
+import com.sopt.now.compose.data_remote.ApiKeyStorage.INFO
+import com.sopt.now.compose.data_remote.ApiKeyStorage.JOIN
+import com.sopt.now.compose.data_remote.ApiKeyStorage.LOGIN
+import com.sopt.now.compose.data_remote.ApiKeyStorage.MEMBER
+import com.sopt.now.compose.data_remote.ApiKeyStorage.MEMBER_ID
 import com.sopt.now.compose.data.dto.request.RequestLoginDto
 import com.sopt.now.compose.data.dto.request.RequestSignDto
 import com.sopt.now.compose.data.dto.response.ResponseLoginDto
@@ -16,7 +16,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 
-interface AuthServiceApi {
+interface AuthApiService {
     @POST("$MEMBER/$JOIN")
     suspend fun postSign(
         @Body requestSignDto: RequestSignDto,
