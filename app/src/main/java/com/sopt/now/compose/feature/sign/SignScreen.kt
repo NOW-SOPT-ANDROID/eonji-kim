@@ -1,4 +1,4 @@
-package com.sopt.now.compose.presentation.sign
+package com.sopt.now.compose.feature.sign
 
 import android.app.Activity
 import android.app.Activity.RESULT_OK
@@ -39,18 +39,18 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.R
-import com.sopt.now.compose.component.textfield.TextFieldWithTitle
-import com.sopt.now.compose.model.User
-import com.sopt.now.compose.presentation.login.LoginActivity
-import com.sopt.now.compose.ui.theme.GreenMain
-import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
-import com.sopt.now.compose.ui.theme.White
-import com.sopt.now.compose.util.KeyStorage.ERROR_SIGN_ID
-import com.sopt.now.compose.util.KeyStorage.ERROR_SIGN_NICKNAME
-import com.sopt.now.compose.util.KeyStorage.ERROR_SIGN_PW
-import com.sopt.now.compose.util.KeyStorage.ERROR_SIGN_TEL
-import com.sopt.now.compose.util.UiState
-import com.sopt.now.compose.util.toast
+import com.sopt.now.compose.core_ui.component.textfield.TextFieldWithTitle
+import com.sopt.now.compose.domain.entity.UserEntity
+import com.sopt.now.compose.feature.login.LoginActivity
+import com.sopt.now.compose.core_ui.theme.GreenMain
+import com.sopt.now.compose.core_ui.theme.NOWSOPTAndroidTheme
+import com.sopt.now.compose.core_ui.theme.White
+import com.sopt.now.compose.feature.KeyStorage.ERROR_SIGN_ID
+import com.sopt.now.compose.feature.KeyStorage.ERROR_SIGN_NICKNAME
+import com.sopt.now.compose.feature.KeyStorage.ERROR_SIGN_PW
+import com.sopt.now.compose.feature.KeyStorage.ERROR_SIGN_TEL
+import com.sopt.now.compose.core_ui.view.UiState
+import com.sopt.now.compose.core_ui.util.toast
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
@@ -150,7 +150,7 @@ fun SignScreen(signViewModel: SignViewModel = viewModel()) {
 
         // SignBtn
         Button(
-            onClick = { signViewModel.postSign(User(id, pw, nickname, tel)) },
+            onClick = { signViewModel.postSign(UserEntity(id, pw, nickname, tel)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 60.dp),

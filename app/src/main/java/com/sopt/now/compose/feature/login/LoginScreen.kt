@@ -1,4 +1,4 @@
-package com.sopt.now.compose.presentation.login
+package com.sopt.now.compose.feature.login
 
 import android.app.Activity
 import android.content.Intent
@@ -39,16 +39,16 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.R
-import com.sopt.now.compose.component.textfield.TextFieldWithTitle
-import com.sopt.now.compose.presentation.home.HomeActivity
-import com.sopt.now.compose.presentation.sign.SignActivity
-import com.sopt.now.compose.ui.theme.GreenMain
-import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
-import com.sopt.now.compose.ui.theme.White
-import com.sopt.now.compose.ui.theme.YellowMain
-import com.sopt.now.compose.util.KeyStorage.ERROR_LOGIN_ID_PW
-import com.sopt.now.compose.util.UiState
-import com.sopt.now.compose.util.toast
+import com.sopt.now.compose.core_ui.component.textfield.TextFieldWithTitle
+import com.sopt.now.compose.feature.home.HomeActivity
+import com.sopt.now.compose.feature.sign.SignActivity
+import com.sopt.now.compose.core_ui.theme.GreenMain
+import com.sopt.now.compose.core_ui.theme.NOWSOPTAndroidTheme
+import com.sopt.now.compose.core_ui.theme.White
+import com.sopt.now.compose.core_ui.theme.YellowMain
+import com.sopt.now.compose.feature.KeyStorage.ERROR_LOGIN_ID_PW
+import com.sopt.now.compose.core_ui.view.UiState
+import com.sopt.now.compose.core_ui.util.toast
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber

@@ -1,4 +1,4 @@
-package com.sopt.now.compose.presentation.home
+package com.sopt.now.compose.feature.home
 
 import android.app.Activity
 import android.os.Bundle
@@ -39,14 +39,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.now.compose.R
-import com.sopt.now.compose.model.BottomNavigationItem
-import com.sopt.now.compose.presentation.myPage.MyPageScreen
-import com.sopt.now.compose.presentation.search.SearchScreen
-import com.sopt.now.compose.ui.theme.GreenMain
-import com.sopt.now.compose.ui.theme.Grey300
-import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
-import com.sopt.now.compose.ui.theme.YellowMain
+import com.sopt.now.compose.domain.entity.BottomNavigationItem
+import com.sopt.now.compose.feature.myPage.MyPageScreen
+import com.sopt.now.compose.feature.search.SearchScreen
+import com.sopt.now.compose.core_ui.theme.GreenMain
+import com.sopt.now.compose.core_ui.theme.Grey300
+import com.sopt.now.compose.core_ui.theme.NOWSOPTAndroidTheme
+import com.sopt.now.compose.core_ui.theme.YellowMain
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

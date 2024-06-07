@@ -1,4 +1,4 @@
-package com.sopt.now.compose.presentation.home
+package com.sopt.now.compose.feature.home
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,14 +19,14 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.R
-import com.sopt.now.compose.component.text.TextWithRow
-import com.sopt.now.compose.model.Friend
-import com.sopt.now.compose.model.User
-import com.sopt.now.compose.ui.theme.GreenMain
-import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
-import com.sopt.now.compose.ui.theme.YellowMain
-import com.sopt.now.compose.util.UiState
-import com.sopt.now.compose.util.toast
+import com.sopt.now.compose.core_ui.component.text.TextWithRow
+import com.sopt.now.compose.domain.entity.FriendEntity
+import com.sopt.now.compose.domain.entity.UserEntity
+import com.sopt.now.compose.core_ui.theme.GreenMain
+import com.sopt.now.compose.core_ui.theme.NOWSOPTAndroidTheme
+import com.sopt.now.compose.core_ui.theme.YellowMain
+import com.sopt.now.compose.core_ui.view.UiState
+import com.sopt.now.compose.core_ui.util.toast
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
@@ -37,15 +37,15 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    var userData by remember { mutableStateOf(emptyList<User>()) }
-    var friendData by remember { mutableStateOf(emptyList<Friend>()) }
+    var userEntityData by remember { mutableStateOf(emptyList<UserEntity>()) }
+    var friendEntityData by remember { mutableStateOf(emptyList<FriendEntity>()) }
 
-    LaunchedEffect(homeViewModel.friendUiState, lifecycleOwner) {
-        homeViewModel.friendUiState.flowWithLifecycle(lifecycleOwner.lifecycle).onEach {
+    LaunchedEffect(homeViewModel.friendEntityUiState, lifecycleOwner) {
+        homeViewModel.friendEntityUiState.flowWithLifecycle(lifecycleOwner.lifecycle).onEach {
             when (it) {
                 is UiState.Success -> {
-                    userData = homeViewModel.mockUserList
-                    friendData = it.data ?: emptyList()
+                    userEntityData = homeViewModel.mockUserListEntity
+                    friendEntityData = it.data ?: emptyList()
                 }
 
                 is UiState.Failure -> context.toast("유저 리스트 조회 실패 : ${it.errorMessage}")
@@ -59,7 +59,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
             .fillMaxSize()
     ) {
         // User
-        itemsIndexed(userData) { index, user ->
+        itemsIndexed(userEntityData) { index, user ->
             TextWithRow(
                 painter = R.drawable.img_user_profile_dororo,
                 contentDescription = "user profile img",
@@ -75,7 +75,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
         }
 
         // Friend
-        itemsIndexed(friendData) { index, friend ->
+        itemsIndexed(friendEntityData) { index, friend ->
             TextWithRow(
                 painter = friend.avatar,
                 contentDescription = "friend profile img",

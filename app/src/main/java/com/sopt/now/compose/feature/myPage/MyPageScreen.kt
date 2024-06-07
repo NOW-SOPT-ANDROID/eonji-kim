@@ -1,4 +1,4 @@
-package com.sopt.now.compose.presentation.myPage
+package com.sopt.now.compose.feature.myPage
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -31,9 +31,9 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.R
-import com.sopt.now.compose.component.text.TextWithTitle
-import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
-import com.sopt.now.compose.util.UiState
+import com.sopt.now.compose.core_ui.component.text.TextWithTitle
+import com.sopt.now.compose.core_ui.theme.NOWSOPTAndroidTheme
+import com.sopt.now.compose.core_ui.view.UiState
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
@@ -53,11 +53,11 @@ fun MyPageScreen(myPageViewModel: MyPageViewModel = viewModel()) {
         myPageViewModel.userInfoUiState.flowWithLifecycle(lifecycleOwner.lifecycle).onEach {
             when (it) {
                 is UiState.Success -> {
-                    with(it.data.data) {
+                    with(it.data) {
                         memberId = "${myPageViewModel.getUserMemberId()}번"
                         userNickname = nickname
-                        userId = authenticationId
-                        userTel = phone
+                        userId = memberId
+                        userTel = tel
                     }
                 }
 
